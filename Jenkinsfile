@@ -1,13 +1,13 @@
 pipeline{
 	agent any
 	environment{
-        	branch_name = "${env.BRANCH_NAME}"
+        	branch_name = "${env.GIT_BRANCH}"
 		name_final = "${env.JOB_NAME}"
 	}
 	stages{
 		stage('Branch "${branch_name}" Check Out'){
             steps{
-		    sh 'echo "${name_final}"'
+		    sh 'echo "${branch_name}"'
             	}
 		}
 	}
