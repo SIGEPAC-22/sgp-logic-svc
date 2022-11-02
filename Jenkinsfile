@@ -1,17 +1,20 @@
 pipeline{
 	agent any
 	environment{
-		name_final = "${env.JOB_NAME}"
 		name_b = "${env.BRANCH_NAME}"
 	}
 	stages{
 		stage('Branch Check Out'){
 
             steps{
-		    sh '''
-		    echo ${name_final}
+		    script{
+			    if (name_b == "master"){
+			    			    sh '''
 		    echo ${name_b}
 		    '''
+			    }
+		    }
+
             	}
 		}
 	}
