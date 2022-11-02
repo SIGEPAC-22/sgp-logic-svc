@@ -2,11 +2,14 @@ pipeline{
 	agent any
 	stages{
 		stage('Branch Check Out'){
-			when {
-        			branch "main"
-      				}
+
             steps{
-		    sh 'echo Funciona"'
+		    sh '//...
+    git rev-parse --abbrev-ref HEAD > GIT_BRANCH'
+    git_branch = readFile('GIT_BRANCH').trim()
+    echo git_branch
+    //...
+   '
             	}
 		}
 	}
