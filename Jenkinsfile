@@ -9,6 +9,9 @@ pipeline{
             steps{
 		    script{
 			    if (name_b == "master"){
+				    agent {
+                label 'windows'
+            }
 			    			    sh '''
 		    echo ${name_b}
 		    '''
