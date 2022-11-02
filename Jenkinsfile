@@ -3,7 +3,7 @@ pipeline{
 	stages{
 		stage('Branch Check Out'){
 			when {
-        			branch "master"
+        			branch "main"
       				}
             steps{
 		    sh 'echo Funciona"'
