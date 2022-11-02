@@ -6,7 +6,7 @@ pipeline{
 	stages{
 		stage('Branch "${branch_name}" Check Out'){
             steps{
-                sh 'echo "${env.BRANCH_NAME}"'
+                sh "${env.BRANCH_NAME}"
             	}
 		}
 	}
