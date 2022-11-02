@@ -5,8 +5,8 @@ pipeline{
 
             steps{
 		    sh '''
-		    ${env.BRANCH_NAME}
-		    env.GIT_BRANCH
+		    echo ${env.BRANCH_NAME}
+		    echo env.GIT_BRANCH
 		    '''
             	}
 		}
