@@ -1,10 +1,13 @@
 pipeline{
 	agent any
+	environment{
+        	branch_name = "${env.BRANCH_NAME}"
+	}
 	stages{
-		stage('Install Dependencies'){
-			steps{
-				sh 'echo Aplicacion'
-			}
+		stage('Branch "${branch_name}" Check Out'){
+            steps{
+                sh 'echo "${branch_name}"'
+            	}
 		}
 	}
 }
