@@ -26,43 +26,69 @@ pipeline{
         }
       }
       stage('SonarQube Analysis'){
-
+        steps{
+          sh 'echo SonarQube'
+        }
       }
       stage('RUN DB DEV'){
-
+        steps{
+          sh 'echo SonarQube'
+        }
       }
       stage('Deploy to DEV'){
-
+        steps{
+          sh 'echo SonarQube'
+        }
       }
       stage('Cucumber Tests'){
-
+        steps{
+          sh 'echo SonarQube'
+        }
       }
       stage('RUN DB QA'){
-
+        steps{
+          sh 'echo SonarQube'
+        }
       }
       stage('Deploy to qa'){
-
+        steps{
+          sh 'echo SonarQube'
+        }
       }
       stage('QA Approval'){
-
+        steps{
+          sh 'echo SonarQube'
+        }
       }
       stage('RUN DB UAT'){
-
+        steps{
+          sh 'echo SonarQube'
+        }
       }
       stage('Deploy to UAT'){
-
+        steps{
+          sh 'echo SonarQube'
+        }
       }
       stage('Cucumber Tests'){
-
+        steps{
+          sh 'echo SonarQube'
+        }
       }
       stage('Wait to deploy in prd'){
-
+        steps{
+          sh 'echo SonarQube'
+        }
       }
       stage('RUN DB PRD'){
-
+        steps{
+          sh 'echo SonarQube'
+        }
       }
       stage('Deploy to prd'){
-
+        steps{
+          sh 'echo SonarQube'
+        }
       }
     }
 }
