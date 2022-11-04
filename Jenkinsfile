@@ -8,9 +8,6 @@ pipeline{
         agent{
             label 'dev'
           }
-        agent{
-            label 'qa'
-          }
         when{
           anyOf{
             branch 'sgp'
