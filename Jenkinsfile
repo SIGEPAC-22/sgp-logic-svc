@@ -1,12 +1,15 @@
-pipeline {
-  agent any
-  environment {
-    name_b = "${env.BRANCH_NAME}"
-  }
+pipeline{
+    agent none
+    environment{
+        namebranch = "${env.BRANCH_NAME}"
+    }
     stages{
       stage('Docker Build'){
         agent{
-          label('dev && qa')
+          anyAll{
+            label 'dev'
+            label 'qa'
+          }
         }
         when{
           anyOf{
@@ -32,62 +35,62 @@ pipeline {
       }
       stage('RUN DB DEV'){
         steps{
-          sh 'echo DB DEV'
+          sh 'echo SonarQube'
         }
       }
       stage('Deploy to DEV'){
         steps{
-          sh 'echo Deploy DEV'
+          sh 'echo SonarQube'
         }
       }
       stage('Cucumber Tests DEV'){
         steps{
-          sh 'echo Cucumber Tests DEV'
+          sh 'echo SonarQube'
         }
       }
       stage('RUN DB QA'){
         steps{
-          sh 'echo DB QA'
+          sh 'echo SonarQube'
         }
       }
       stage('Deploy to qa'){
         steps{
-          sh 'echo Deploy QA'
+          sh 'echo SonarQube'
         }
       }
       stage('QA Approval'){
         steps{
-          sh 'echo Aprobacion QA'
+          sh 'echo SonarQube'
         }
       }
       stage('RUN DB UAT'){
         steps{
-          sh 'echo DB UAT'
+          sh 'echo SonarQube'
         }
       }
       stage('Deploy to UAT'){
         steps{
-          sh 'echo Deploy UAT'
+          sh 'echo SonarQube'
         }
       }
       stage('Cucumber Tests UAT'){
         steps{
-          sh 'echo Cucumber Tests UAT'
+          sh 'echo SonarQube'
         }
       }
       stage('Wait to deploy in prd'){
         steps{
-          sh 'echo Aprobacion PRD'
+          sh 'echo SonarQube'
         }
       }
       stage('RUN DB PRD'){
         steps{
-          sh 'echo Deploy DB'
+          sh 'echo SonarQube'
         }
       }
       stage('Deploy to prd'){
         steps{
-          sh 'echo Deploy PRD'
+          sh 'echo SonarQube'
         }
       }
     }
