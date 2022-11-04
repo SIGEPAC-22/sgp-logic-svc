@@ -7,6 +7,8 @@ pipeline{
       stage('Docker Build'){
         agent{
             label 'dev'
+          }
+        agent{
             label 'qa'
           }
         when{
