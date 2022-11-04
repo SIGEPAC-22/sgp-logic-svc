@@ -1,8 +1,8 @@
-pipeline{
-    agent any
-    enviroment{
-        namebranch = "${env.BRANCH_NAME}"
-    }
+pipeline {
+  agent any
+  environment {
+    name_b = "${env.BRANCH_NAME}"
+  }
     stages{
       stage('Docker Build'){
         agent{
@@ -17,9 +17,9 @@ pipeline{
         }
         steps{
           script{
-            if (namebranch == "master") {
+            if (name_b == "master") {
               sh '''
-              echo ${namebranch}
+              echo ${name_b}
               '''
             }
           }
