@@ -38,7 +38,7 @@ pipeline{
       }
       stage('SonarQube Analysis'){
         steps{
-          sh 'echo SonarQube'
+          echo 'SonarQube'
         }
       }
       stage('RUN DB DEV'){
@@ -65,52 +65,52 @@ pipeline{
       }
       stage('Cucumber Tests DEV'){
         steps{
-          sh 'echo SonarQube'
+          echo 'Cumcuber Tests'
         }
       }
       stage('RUN DB QA'){
         steps{
-          sh 'echo SonarQube'
+          echo 'DB QA'
         }
       }
       stage('Deploy to qa'){
         steps{
-          sh 'echo SonarQube'
+          echo 'SonarQube'
         }
       }
       stage('QA Approval'){
         steps{
-          sh 'echo SonarQube'
+          echo 'SonarQube'
         }
       }
       stage('RUN DB UAT'){
         steps{
-          sh 'echo SonarQube'
+          echo 'SonarQube'
         }
       }
       stage('Deploy to UAT'){
         steps{
-          sh 'echo SonarQube'
+          echo 'SonarQube'
         }
       }
       stage('Cucumber Tests UAT'){
         steps{
-          sh 'echo SonarQube'
+          echo 'SonarQube'
         }
       }
       stage('Wait to deploy in prd'){
         steps{
-          sh 'echo SonarQube'
+          echo 'SonarQube'
         }
       }
       stage('RUN DB PRD'){
         steps{
-          sh 'echo SonarQube'
+          echo 'SonarQube'
         }
       }
       stage('Deploy to prd'){
         steps{
-          sh 'echo SonarQube'
+          echo 'SonarQube'
         }
       }
     }
