@@ -11,6 +11,12 @@ pipeline{
 		echo "${env.JOB_BASE_NAME}"
 		echo "${env.BUILD_TAG}"
 		echo "${env.NODE_NAME}"
+		echo "${env.NODE_LABELS}"
+		echo "${env.WORKSPACE}"
+		echo "${env.GIT_BRANCH}"
+		echo "${env.GIT_LOCAL_BRANCH}"
+		echo "${env.GIT_CHECKOUT_DIR}"
+		echo "${env.GIT_AUTHOR_NAME}"
 	    }
         }
     }
