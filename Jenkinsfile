@@ -56,7 +56,7 @@ pipeline{
         steps{
 				  script{
 					    sh '''
-		    			docker run  -dt -p :90 --name ${name_final} ${name_final}
+		    			docker run  -dt -p :90 --name prueba prueba
 		    			docker system prune -f
               '''
 				  }
