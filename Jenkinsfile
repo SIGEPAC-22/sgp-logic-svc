@@ -1,5 +1,5 @@
 pipeline{
-    agent none
+    agent any
     environment{
         namebranch = "${env.BRANCH_NAME}"
         name_final = "${env.JOB_NAME}"
