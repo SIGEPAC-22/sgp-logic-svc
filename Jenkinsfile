@@ -1,11 +1,15 @@
 pipeline{
-    agent any
+    agent none
     environment{
         namebranch = "${env.BRANCH_NAME}"
+        name_final = "${env.JOB_NAME}"
         DB_CREDS=credentials('db-creds')
     }
     stages{
       stage('Docker Build'){
+        agent{
+            label 'dev'
+          }
         when{
           anyOf{
             branch 'sgp*'
@@ -15,17 +19,17 @@ pipeline{
         }
         steps{
 				  script{
-					    def result = sh(returnStdout: true, script: 'echo "$(docker ps -q --filter name=prueba)"').trim()
+					    def result = sh(returnStdout: true, script: 'echo "$(docker ps -q --filter name=${name_final})"').trim()
 					    if (result != ""){
 						    sh '''
-						    docker stop prueba
-						    docker rm -vf prueba
-						    docker build . -t prueba
+						    docker stop ${name_final}
+						    docker rm -vf ${name_final}
+						    docker build . -t ${name_final}
 						    docker system prune -f
 						    '''
 					    }else{
 						    sh '''
-						    docker build . -t prueba
+						    docker build . -t ${name_final}
                 docker system prune -f
                 '''
 					  }
@@ -53,7 +57,7 @@ pipeline{
         steps{
 				  script{
 					    sh '''
-		    			docker run  -dt -p :90 --name prueba prueba
+		    			docker run  -dt -p :90 --name ${name_final} ${name_final}
 		    			docker system prune -f
               '''
 				  }
