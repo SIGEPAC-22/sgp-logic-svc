@@ -5,8 +5,8 @@ pipeline {
   }
   stages {
     stage('Branch Check Out') {
-      agent{
-        label 'boot'
+      when{
+        branch 'master'
       }
       steps {
         script {
