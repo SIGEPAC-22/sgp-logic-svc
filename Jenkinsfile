@@ -1,5 +1,5 @@
 pipeline{
-    agent none
+    agent any
     enviroment{
         namebranch = "${env.BRANCH_NAME}"
     }
