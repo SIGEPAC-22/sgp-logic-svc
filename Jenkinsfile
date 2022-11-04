@@ -9,7 +9,6 @@ pipeline{
             label 'dev'
             label 'qa'
           }
-        }
         when{
           anyOf{
             branch 'sgp'
