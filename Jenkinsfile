@@ -40,7 +40,7 @@ pipeline{
           sh 'echo Deploy DEV'
         }
       }
-      stage('Cucumber Tests'){
+      stage('Cucumber Tests DEV'){
         steps{
           sh 'echo Cucumber Tests DEV'
         }
@@ -70,7 +70,7 @@ pipeline{
           sh 'echo Deploy UAT'
         }
       }
-      stage('Cucumber Tests'){
+      stage('Cucumber Tests UAT'){
         steps{
           sh 'echo Cucumber Tests UAT'
         }
