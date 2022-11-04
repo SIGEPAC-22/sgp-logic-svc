@@ -6,7 +6,6 @@ pipeline{
     stages{
       stage('Docker Build'){
         agent{
-          anyAll{
             label 'dev'
             label 'qa'
           }
