@@ -20,9 +20,9 @@ pipeline{
         }
         steps{
           script{
-            if (name_b == "master") {
+            if (namebranch == "master") {
               sh '''
-              echo ${name_b}
+              echo ${namebranch}
               '''
             }
           }
