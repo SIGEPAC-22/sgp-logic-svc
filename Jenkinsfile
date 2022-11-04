@@ -1,14 +1,11 @@
 pipeline{
-    agent none
+    agent any
     environment{
         namebranch = "${env.BRANCH_NAME}"
         DB_CREDS=credentials('db-creds')
     }
     stages{
       stage('Docker Build'){
-        agent{
-            label 'dev'
-          }
         when{
           anyOf{
             branch 'sgp*'
