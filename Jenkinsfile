@@ -2,7 +2,6 @@ pipeline {
   agent any
   environment {
     name_final = "sgp-logic-svc"
-    DB_CREDS = credentials('db-creds')
   }
   stages {
     stage('Docker Build') {
@@ -85,7 +84,7 @@ pipeline {
         echo 'SonarQube'
       }
     }
-    stage('Deploy to qa') {
+    stage('Deploy to QA') {
       agent {
         label 'qa'
       }
@@ -103,13 +102,13 @@ pipeline {
             docker stop ${name_final}
             docker rm -vf ${name_final}
             docker build . -t ${name_final}
-            docker run -dt -p 30302:90 --name ${name_final} ${name_final}
+            docker run -dt -p 30002:90 --name ${name_final} ${name_final}
             docker system prune -f
 	    '''
           } else {
             sh '''
             docker build . -t ${name_final}
-            docker run -dt -p 30302:90 --name ${name_final} ${name_final}
+            docker run -dt -p 30002:90 --name ${name_final} ${name_final}
             docker system prune -f
 	    '''
           }
@@ -142,13 +141,13 @@ pipeline {
             docker stop ${name_final}
             docker rm -vf ${name_final}
             docker build . -t ${name_final}
-            docker run -dt -p 30602:90 --name ${name_final} ${name_final}
+            docker run -dt -p 30002:90 --name ${name_final} ${name_final}
             docker system prune -f
 	    '''
           } else {
             sh '''
             docker build . -t ${name_final}
-            docker run -dt -p 30602:90 --name ${name_final} ${name_final}
+            docker run -dt -p 30002:90 --name ${name_final} ${name_final}
             docker system prune -f
 	    '''
           }
