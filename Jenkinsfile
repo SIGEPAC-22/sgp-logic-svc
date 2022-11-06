@@ -126,7 +126,7 @@ pipeline {
         input "Aprobacion Tester QA"
       }
     }
-    stage('Deploy to prd') {
+    stage('Deploy to PRD') {
       agent {
         label 'prd'
       }
