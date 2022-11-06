@@ -1,23 +1,159 @@
-pipeline{
-    agent any
-    stages{
-        stage("Env Build Number"){
-            steps{
-                echo "${env.BRANCH_NAME}"
-		echo "${env.BRANCH_IS_PRIMARY}"
-		echo "${env.TAG_NAME}"
-		echo "${env.BUILD_DISPLAY_NAME}"
-		echo "${env.JOB_NAME}"
-		echo "${env.JOB_BASE_NAME}"
-		echo "${env.BUILD_TAG}"
-		echo "${env.NODE_NAME}"
-		echo "${env.NODE_LABELS}"
-		echo "${env.WORKSPACE}"
-		echo "${env.GIT_BRANCH}"
-		echo "${env.GIT_LOCAL_BRANCH}"
-		echo "${env.GIT_CHECKOUT_DIR}"
-		echo "${env.GIT_AUTHOR_NAME}"
-	    }
+pipeline {
+  agent any
+  environment {
+    name_final = "sgp-logic-svc"
+    DB_CREDS = credentials('db-creds')
+  }
+  stages {
+    stage('Docker Build') {
+      agent {
+        label 'dev'
+      }
+      when {
+        anyOf {
+          branch 'sgp*'
+          branch 'sprint-*'
+          branch 'master'
         }
+      }
+      steps {
+        script {
+          def result = sh(returnStdout: true, script: 'echo "$(docker ps -q --filter name=${name_final})"').trim()
+          if (result != "") {
+            sh '''
+            docker stop ${name_final}
+            docker rm -vf ${name_final}
+            docker build . -t ${name_final}
+            docker system prune -f
+	    '''
+          } else {
+            sh '''
+            docker build . -t ${name_final}
+            docker system prune -f
+	    '''
+          }
+        }
+      }
     }
+    stage('SonarQube Analysis') {
+      agent {
+        label 'dev'
+      }
+      when {
+        anyOf {
+          branch 'sgp*'
+          branch 'sprint-*'
+          branch 'master'
+        }
+      }
+      steps {
+        sh 'echo SonarQube'
+      }
+    }
+    stage('Deploy to DEV') {
+      agent {
+        label 'dev'
+      }
+      when {
+        anyOf {
+          branch 'sgp*'
+          branch 'sprint-*'
+          branch 'master'
+        }
+      }
+      steps {
+        script {
+          sh '''
+          docker run -dt -p 30002:90 --name ${name_final} ${name_final}
+          docker system prune -f
+	  '''
+        }
+      }
+    }
+    stage('Cucumber Tests DEV') {
+      agent {
+        label 'dev'
+      }
+      when {
+        anyOf {
+          branch 'sgp*'
+          branch 'sprint-*'
+          branch 'master'
+        }
+      }
+      steps {
+        echo 'SonarQube'
+      }
+    }
+    stage('Deploy to qa') {
+      agent {
+        label 'qa'
+      }
+      when {
+        anyOf {
+          branch 'sprint-*'
+          branch 'master'
+        }
+      }
+      steps {
+        script {
+          def result = sh(returnStdout: true, script: 'echo "$(docker ps -q --filter name=${name_final})"').trim()
+          if (result != "") {
+            sh '''
+            docker stop ${name_final}
+            docker rm -vf ${name_final}
+            docker build . -t ${name_final}
+            docker run -dt -p 30302:90 --name ${name_final} ${name_final}
+            docker system prune -f
+	    '''
+          } else {
+            sh '''
+            docker build . -t ${name_final}
+            docker run -dt -p 30302:90 --name ${name_final} ${name_final}
+            docker system prune -f
+	    '''
+          }
+        }
+      }
+    }
+    stage('QA Approval') {
+      agent {
+        label 'prd'
+      }
+      when {
+          branch 'master'
+      }
+      steps {
+        input "Aprobacion Tester QA"
+      }
+    }
+    stage('Deploy to prd') {
+      agent {
+        label 'prd'
+      }
+      when {
+          branch 'master'
+      }
+      steps {
+        script {
+          def result = sh(returnStdout: true, script: 'echo "$(docker ps -q --filter name=${name_final})"').trim()
+          if (result != "") {
+            sh '''
+            docker stop ${name_final}
+            docker rm -vf ${name_final}
+            docker build . -t ${name_final}
+            docker run -dt -p 30602:90 --name ${name_final} ${name_final}
+            docker system prune -f
+	    '''
+          } else {
+            sh '''
+            docker build . -t ${name_final}
+            docker run -dt -p 30602:90 --name ${name_final} ${name_final}
+            docker system prune -f
+	    '''
+          }
+        }
+      }
+    }
+  }
 }
