@@ -10,8 +10,13 @@ datasource:
 
 paths:
   createComorbidity: "/v1/sgp-logic-svc/createComorbidity"
+  createSymptom: "/v1/sgp-logic-svc/createSymptom"
+
   updateComorbidity: "/v1/sgp-logic-svc/updateComorbidity"
+  updateSymptom: "/v1/sgp-logic-svc/updateSymptom"
+
   deleteComorbidity: "/v1/sgp-logic-svc/deleteComorbidity"
+  deleteSymptom: "/v1/sgp-logic-svc/deleteSymptom"
 
 appProperties:
   createComorbidityStatusInitial: 1

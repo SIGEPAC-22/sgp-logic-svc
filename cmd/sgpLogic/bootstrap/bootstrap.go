@@ -15,12 +15,21 @@ import (
 	"sgp-logic-svc/internal/createComorbidity/platform/handler"
 	"sgp-logic-svc/internal/createComorbidity/platform/storage/mysql"
 	"sgp-logic-svc/internal/createComorbidity/service"
+	handler4 "sgp-logic-svc/internal/createSymptom/platform/handler"
+	mysql4 "sgp-logic-svc/internal/createSymptom/platform/storage/mysql"
+	service4 "sgp-logic-svc/internal/createSymptom/service"
 	handler3 "sgp-logic-svc/internal/deleteComorbidity/platform/handler"
 	mysql3 "sgp-logic-svc/internal/deleteComorbidity/platform/storage/mysql"
 	service3 "sgp-logic-svc/internal/deleteComorbidity/service"
+	handler5 "sgp-logic-svc/internal/deleteSymptom/platform/handler"
+	mysql5 "sgp-logic-svc/internal/deleteSymptom/platform/storage/mysql"
+	service5 "sgp-logic-svc/internal/deleteSymptom/service"
 	handler2 "sgp-logic-svc/internal/updateComorbidity/platform/handler"
 	mysql2 "sgp-logic-svc/internal/updateComorbidity/platform/storage/mysql"
 	service2 "sgp-logic-svc/internal/updateComorbidity/service"
+	handler6 "sgp-logic-svc/internal/updateSymptom/platform/handler"
+	mysql6 "sgp-logic-svc/internal/updateSymptom/platform/storage/mysql"
+	service6 "sgp-logic-svc/internal/updateSymptom/service"
 	"syscall"
 )
 
@@ -64,6 +73,14 @@ func Run() {
 	createComorbidityHandler := handler.NewCreateComorbidityHandler(config.GetString("paths.createComorbidity"), createComorbidityEndpoint)
 	//////////////////////CREATE CONMORBILITY////////////////////////////////////////////////
 
+	//////////////////////CREATE SYMPTOM////////////////////////////////////////////////
+	createSymptomRepo := mysql4.NewCreateSymptomRepository(db, kitlogger)
+	createSymptomService := service4.NewCreateSymptomSvc(createSymptomRepo, kitlogger)
+	createSymptomEndpoint := handler4.MakeCreateSymptomEndpoint(createSymptomService)
+	createSymptomEndpoint = handler4.CreateSymptomTransportMiddleware(kitlogger)(createSymptomEndpoint)
+	createSymptomHandler := handler4.NewCreateSymptomHandler(config.GetString("paths.createSymptom"), createSymptomEndpoint)
+	//////////////////////CREATE SYMPTOM////////////////////////////////////////////////
+
 	//////////////////////UPDATE CONMORBILITY////////////////////////////////////////////////
 	updateComorbidityRepo := mysql2.NewUpdateComorbidityRepository(db, kitlogger)
 	updateComorbidityService := service2.NewUpdateComorbidityService(updateComorbidityRepo, kitlogger)
@@ -71,6 +88,14 @@ func Run() {
 	updateComorbidityEndpoint = handler2.UpdateComorbidityTransportMiddleware(kitlogger)(updateComorbidityEndpoint)
 	updateComorbidityHandler := handler2.NewUpdateComorbidityHandler(config.GetString("paths.updateComorbidity"), updateComorbidityEndpoint)
 	//////////////////////UPDATE CONMORBILITY////////////////////////////////////////////////
+
+	//////////////////////UPDATE SYMPTOM////////////////////////////////////////////////
+	updateSymptomRepo := mysql6.NewUpdateSymptomRepository(db, kitlogger)
+	updateSymptomService := service6.NewUpdateSymptomService(updateSymptomRepo, kitlogger)
+	updateSymptomEndpoint := handler6.MakeUpdateSymptomEndpoint(updateSymptomService)
+	updateSymptomEndpoint = handler6.UpdateSymptomTransportMiddleware(kitlogger)(updateSymptomEndpoint)
+	updateSymptomHandler := handler6.NewUpdateSymptomHandler(config.GetString("paths.updateSymptom"), updateSymptomEndpoint)
+	//////////////////////UPDATE SYMPTOM////////////////////////////////////////////////
 
 	//////////////////////DELETE CONMORBILITY////////////////////////////////////////////////
 	deleteComorbidityRepo := mysql3.NewDeleteComorbidityRepository(db, kitlogger)
@@ -80,9 +105,22 @@ func Run() {
 	deleteComorbidityHandler := handler3.NewDeleteComorbidityHandler(config.GetString("paths.deleteComorbidity"), deleteComorbidityEndpoint)
 	//////////////////////DELETE CONMORBILITY////////////////////////////////////////////////
 
+	//////////////////////DELETE SYMPTOM////////////////////////////////////////////////
+	deleteSymptomRepo := mysql5.NewDeleteSymptomRepository(db, kitlogger)
+	deleteSymptomService := service5.NewDeleteSymptomService(deleteSymptomRepo, kitlogger)
+	deleteSymptomEndpoint := handler5.MakeDeleteSymptomEndpoint(deleteSymptomService)
+	deleteSymptomEndpoint = handler5.DeleteSymptomTransportMiddleware(kitlogger)(deleteSymptomEndpoint)
+	deleteSymptomHandler := handler5.NewDeleteSymptomHandler(config.GetString("paths.deleteSymptom"), deleteSymptomEndpoint)
+	//////////////////////DELETE SYMPTOM////////////////////////////////////////////////
+
 	mux.Handle(config.GetString("paths.createComorbidity"), createComorbidityHandler)
+	mux.Handle(config.GetString("paths.createSymptom"), createSymptomHandler)
+
 	mux.Handle(config.GetString("paths.updateComorbidity"), updateComorbidityHandler)
+	mux.Handle(config.GetString("paths.updateSymptom"), updateSymptomHandler)
+
 	mux.Handle(config.GetString("paths.deleteComorbidity"), deleteComorbidityHandler)
+	mux.Handle(config.GetString("paths.deleteSymptom"), deleteSymptomHandler)
 	mux.Handle("/health", health.NewHandler())
 
 	go func() {
