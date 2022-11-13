@@ -8,19 +8,19 @@ import (
 	"sgp-logic-svc/kit/constants"
 )
 
-type CreateConmorbilityRepository struct {
+type CreateComorbidityRepository struct {
 	db     *sql.DB
 	logger kitlog.Logger
 }
 
-func NewCreateConmorbilityRepository(db *sql.DB, logger kitlog.Logger) *CreateConmorbilityRepository {
-	return &CreateConmorbilityRepository{db: db, logger: logger}
+func NewCreateComorbidityRepository(db *sql.DB, logger kitlog.Logger) *CreateComorbidityRepository {
+	return &CreateComorbidityRepository{db: db, logger: logger}
 }
 
-func (c CreateConmorbilityRepository) CreateConmorbilityRepo(ctx context.Context, NameConmorbility string, DescriptionConmorbility string) (bool, error) {
+func (c CreateComorbidityRepository) CreateComorbidityRepo(ctx context.Context, NameConmorbility string, DescriptionConmorbility string) (bool, error) {
 
 	config := goconfig.NewConfig("./application.yaml", goconfig.Yaml)
-	statusInitial := config.GetInt("appProperties.createConmorbilityStatusInitial")
+	statusInitial := config.GetInt("appProperties.createComorbidityStatusInitial")
 	sql, err := c.db.ExecContext(ctx, "INSERT INTO cby_comorbidity (cby_name_comorbidity,cby_comorbidity_description,cby_id_state_data)VALUES(?,?,?);", NameConmorbility, DescriptionConmorbility, statusInitial)
 	c.logger.Log("query about to exec", "query", sql, constants.UUID, ctx.Value(constants.UUID))
 	if err != nil {

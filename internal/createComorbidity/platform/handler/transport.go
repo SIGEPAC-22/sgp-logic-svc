@@ -11,28 +11,28 @@ import (
 	"sgp-logic-svc/kit/constants"
 )
 
-func NewCreateConmorbilityHandler(path string, endpoints endpoint.Endpoint) http.Handler {
+func NewCreateComorbidityHandler(path string, endpoints endpoint.Endpoint) http.Handler {
 	r := mux.NewRouter()
 	r.Handle(path,
 		httptransport.NewServer(endpoints,
-			DecodeRequestCreateConmorbility,
-			EncodeRequestCreateConmorbility,
+			DecodeRequestCreateComorbidity,
+			EncodeRequestCreateComorbidity,
 		)).Methods(http.MethodPost)
 	return r
 }
 
-func DecodeRequestCreateConmorbility(ctx context.Context, r *http.Request) (interface{}, error) {
+func DecodeRequestCreateComorbidity(ctx context.Context, r *http.Request) (interface{}, error) {
 	processID, _ := uuid.NewUUID()
 	ctx = context.WithValue(ctx, constants.UUID, processID.String())
-	var confRequest CreateConmorbilityInternalRequest
+	var confRequest CreateComorbidityInternalRequest
 	err := json.NewDecoder(r.Body).Decode(&confRequest)
 	confRequest.ctx = ctx
 	return confRequest, err
 }
 
-func EncodeRequestCreateConmorbility(ctx context.Context, w http.ResponseWriter, response interface{}) error {
+func EncodeRequestCreateComorbidity(ctx context.Context, w http.ResponseWriter, response interface{}) error {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-	resp, _ := response.(CreateConmorbilityInternalResponse)
+	resp, _ := response.(CreateComorbidityInternalResponse)
 	if resp.Err != nil {
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		switch resp.Err {

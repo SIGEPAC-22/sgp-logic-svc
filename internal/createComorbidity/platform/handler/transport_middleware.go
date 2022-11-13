@@ -10,13 +10,13 @@ import (
 
 type Middleware func(endpoint endpoint.Endpoint) endpoint.Endpoint
 
-func CreateConmorbilityTransportMiddleware(log kitlog.Logger) Middleware {
+func CreateComorbidityTransportMiddleware(log kitlog.Logger) Middleware {
 	return func(e endpoint.Endpoint) endpoint.Endpoint {
 		return func(ctx context.Context, request interface{}) (response interface{}, err error) {
-			req := request.(CreateConmorbilityInternalRequest)
+			req := request.(CreateComorbidityInternalRequest)
 			if err := validator.Validate(&req); err != nil {
 				log.Log("invalid request", "error", err.Error(), "request", req)
-				return CreateConmorbilityInternalResponse{
+				return CreateComorbidityInternalResponse{
 					Response: constants.ErrorDataError.Error() + " - " + err.Error(),
 					Err:      constants.ErrorDataError,
 				}, nil

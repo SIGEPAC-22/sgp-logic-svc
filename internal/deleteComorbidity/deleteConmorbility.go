@@ -1,4 +1,4 @@
-package deleteConmorbility
+package deleteComorbidity
 
 import "context"
 

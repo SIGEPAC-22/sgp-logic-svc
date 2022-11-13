@@ -12,12 +12,12 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"sgp-logic-svc/internal/createConmorbility/platform/handler"
-	"sgp-logic-svc/internal/createConmorbility/platform/storage/mysql"
-	"sgp-logic-svc/internal/createConmorbility/service"
-	handler3 "sgp-logic-svc/internal/deleteConmorbility/platform/handler"
-	mysql3 "sgp-logic-svc/internal/deleteConmorbility/platform/storage/mysql"
-	service3 "sgp-logic-svc/internal/deleteConmorbility/service"
+	"sgp-logic-svc/internal/createComorbidity/platform/handler"
+	"sgp-logic-svc/internal/createComorbidity/platform/storage/mysql"
+	"sgp-logic-svc/internal/createComorbidity/service"
+	handler3 "sgp-logic-svc/internal/deleteComorbidity/platform/handler"
+	mysql3 "sgp-logic-svc/internal/deleteComorbidity/platform/storage/mysql"
+	service3 "sgp-logic-svc/internal/deleteComorbidity/service"
 	handler2 "sgp-logic-svc/internal/updateConmorbility/platform/handler"
 	mysql2 "sgp-logic-svc/internal/updateConmorbility/platform/storage/mysql"
 	service2 "sgp-logic-svc/internal/updateConmorbility/service"
@@ -57,11 +57,11 @@ func Run() {
 	}
 
 	//////////////////////CREATE CONMORBILITY////////////////////////////////////////////////
-	createConmorbilityRepo := mysql.NewCreateConmorbilityRepository(db, kitlogger)
-	createConmorbilityService := service.NewCreateConmorbilitySvc(createConmorbilityRepo, kitlogger)
-	createConmorbilityEndpoint := handler.MakeCreateConmorbilityEndpoint(createConmorbilityService)
-	createConmorbilityEndpoint = handler.CreateConmorbilityTransportMiddleware(kitlogger)(createConmorbilityEndpoint)
-	createConmorbilityHandler := handler.NewCreateConmorbilityHandler(config.GetString("paths.createConmorbility"), createConmorbilityEndpoint)
+	createComorbidityRepo := mysql.NewCreateComorbidityRepository(db, kitlogger)
+	createComorbidityService := service.NewCreateComorbiditySvc(createComorbidityRepo, kitlogger)
+	createComorbidityEndpoint := handler.MakeCreateComorbidityEndpoint(createComorbidityService)
+	createComorbidityEndpoint = handler.CreateComorbidityTransportMiddleware(kitlogger)(createComorbidityEndpoint)
+	createComorbidityHandler := handler.NewCreateComorbidityHandler(config.GetString("paths.createComorbidity"), createComorbidityEndpoint)
 	//////////////////////CREATE CONMORBILITY////////////////////////////////////////////////
 
 	//////////////////////UPDATE CONMORBILITY////////////////////////////////////////////////
@@ -77,12 +77,12 @@ func Run() {
 	deleteConmorbilityService := service3.NewDeleteConmorbilityService(deleteConmorbilityRepo, kitlogger)
 	deleteConmorbilityEndpoint := handler3.MakeDeleteConmorbilityEndpoint(deleteConmorbilityService)
 	deleteConmorbilityEndpoint = handler3.DeleteConmorbilityTransportMiddleware(kitlogger)(deleteConmorbilityEndpoint)
-	deleteConmorbilityHandler := handler3.NewDeleteConmorbilityHandler(config.GetString("paths.deleteConmorbility"), deleteConmorbilityEndpoint)
+	deleteConmorbilityHandler := handler3.NewDeleteConmorbilityHandler(config.GetString("paths.deleteComorbidity"), deleteConmorbilityEndpoint)
 	//////////////////////DELETE CONMORBILITY////////////////////////////////////////////////
 
-	mux.Handle(config.GetString("paths.createConmorbility"), createConmorbilityHandler)
-	mux.Handle(config.GetString("paths.updateConmorbility"), updateConmorbilityHandler)
-	mux.Handle(config.GetString("paths.deleteConmorbility"), deleteConmorbilityHandler)
+	mux.Handle(config.GetString("paths.createComorbidity"), createComorbidityHandler)
+	mux.Handle(config.GetString("paths.updateComorbidity"), updateConmorbilityHandler)
+	mux.Handle(config.GetString("paths.deleteComorbidity"), deleteConmorbilityHandler)
 	mux.Handle("/health", health.NewHandler())
 
 	go func() {
