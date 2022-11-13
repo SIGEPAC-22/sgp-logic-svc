@@ -11,30 +11,30 @@ import (
 	"sgp-logic-svc/kit/constants"
 )
 
-func NewUpdateConmorbilityHandler(path string, endpoints endpoint.Endpoint) http.Handler {
+func NewUpdateComorbidityHandler(path string, endpoints endpoint.Endpoint) http.Handler {
 	r := mux.NewRouter()
 	r.Handle(path,
 		httptransport.NewServer(endpoints,
-			DecodeRequestUpdateConmorbility,
-			EncodeRequestUpdateConmorbility,
+			DecodeRequestUpdateComorbidity,
+			EncodeRequestUpdateComorbidity,
 		)).Methods(http.MethodPut)
 	return r
 }
 
-func DecodeRequestUpdateConmorbility(ctx context.Context, r *http.Request) (interface{}, error) {
+func DecodeRequestUpdateComorbidity(ctx context.Context, r *http.Request) (interface{}, error) {
 	processID, _ := uuid.NewUUID()
 	ctx = context.WithValue(ctx, constants.UUID, processID.String())
 	id := r.URL.Query().Get("id")
-	var confRequest UpdateConmorbilityInternalRequest
+	var confRequest UpdateComorbidityInternalRequest
 	confRequest.Id = id
 	err := json.NewDecoder(r.Body).Decode(&confRequest)
 	confRequest.ctx = ctx
 	return confRequest, err
 }
 
-func EncodeRequestUpdateConmorbility(ctx context.Context, w http.ResponseWriter, response interface{}) error {
+func EncodeRequestUpdateComorbidity(ctx context.Context, w http.ResponseWriter, response interface{}) error {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-	resp, _ := response.(UpdateConmorbilityInternalResponse)
+	resp, _ := response.(UpdateComorbidityInternalResponse)
 	if resp.Err != nil {
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		switch resp.Err {

@@ -18,9 +18,9 @@ import (
 	handler3 "sgp-logic-svc/internal/deleteComorbidity/platform/handler"
 	mysql3 "sgp-logic-svc/internal/deleteComorbidity/platform/storage/mysql"
 	service3 "sgp-logic-svc/internal/deleteComorbidity/service"
-	handler2 "sgp-logic-svc/internal/updateConmorbility/platform/handler"
-	mysql2 "sgp-logic-svc/internal/updateConmorbility/platform/storage/mysql"
-	service2 "sgp-logic-svc/internal/updateConmorbility/service"
+	handler2 "sgp-logic-svc/internal/updateComorbidity/platform/handler"
+	mysql2 "sgp-logic-svc/internal/updateComorbidity/platform/storage/mysql"
+	service2 "sgp-logic-svc/internal/updateComorbidity/service"
 	"syscall"
 )
 
@@ -65,24 +65,24 @@ func Run() {
 	//////////////////////CREATE CONMORBILITY////////////////////////////////////////////////
 
 	//////////////////////UPDATE CONMORBILITY////////////////////////////////////////////////
-	updateConmorbilityRepo := mysql2.NewUpdateConmorbilityRepository(db, kitlogger)
-	updateConmorbilityService := service2.NewUpdateConmorbilityService(updateConmorbilityRepo, kitlogger)
-	updateConmorbilityEndpoint := handler2.MakeUpdateUpdateConmorbilityEndpoint(updateConmorbilityService)
-	updateConmorbilityEndpoint = handler2.UpdateConmorbilityTransportMiddleware(kitlogger)(updateConmorbilityEndpoint)
-	updateConmorbilityHandler := handler2.NewUpdateConmorbilityHandler(config.GetString("paths.updateConmorbility"), updateConmorbilityEndpoint)
+	updateComorbidityRepo := mysql2.NewUpdateComorbidityRepository(db, kitlogger)
+	updateComorbidityService := service2.NewUpdateComorbidityService(updateComorbidityRepo, kitlogger)
+	updateComorbidityEndpoint := handler2.MakeUpdateComorbidityEndpoint(updateComorbidityService)
+	updateComorbidityEndpoint = handler2.UpdateComorbidityTransportMiddleware(kitlogger)(updateComorbidityEndpoint)
+	updateComorbidityHandler := handler2.NewUpdateComorbidityHandler(config.GetString("paths.updateComorbidity"), updateComorbidityEndpoint)
 	//////////////////////UPDATE CONMORBILITY////////////////////////////////////////////////
 
 	//////////////////////DELETE CONMORBILITY////////////////////////////////////////////////
-	deleteConmorbilityRepo := mysql3.NewDeleteConmorbilityRepository(db, kitlogger)
-	deleteConmorbilityService := service3.NewDeleteConmorbilityService(deleteConmorbilityRepo, kitlogger)
-	deleteConmorbilityEndpoint := handler3.MakeDeleteConmorbilityEndpoint(deleteConmorbilityService)
-	deleteConmorbilityEndpoint = handler3.DeleteConmorbilityTransportMiddleware(kitlogger)(deleteConmorbilityEndpoint)
-	deleteConmorbilityHandler := handler3.NewDeleteConmorbilityHandler(config.GetString("paths.deleteComorbidity"), deleteConmorbilityEndpoint)
+	deleteComorbidityRepo := mysql3.NewDeleteComorbidityRepository(db, kitlogger)
+	deleteComorbidityService := service3.NewDeleteComorbidityService(deleteComorbidityRepo, kitlogger)
+	deleteComorbidityEndpoint := handler3.MakeDeleteComorbidityEndpoint(deleteComorbidityService)
+	deleteComorbidityEndpoint = handler3.DeleteComorbidityTransportMiddleware(kitlogger)(deleteComorbidityEndpoint)
+	deleteComorbidityHandler := handler3.NewDeleteComorbidityHandler(config.GetString("paths.deleteComorbidity"), deleteComorbidityEndpoint)
 	//////////////////////DELETE CONMORBILITY////////////////////////////////////////////////
 
 	mux.Handle(config.GetString("paths.createComorbidity"), createComorbidityHandler)
-	mux.Handle(config.GetString("paths.updateComorbidity"), updateConmorbilityHandler)
-	mux.Handle(config.GetString("paths.deleteComorbidity"), deleteConmorbilityHandler)
+	mux.Handle(config.GetString("paths.updateComorbidity"), updateComorbidityHandler)
+	mux.Handle(config.GetString("paths.deleteComorbidity"), deleteComorbidityHandler)
 	mux.Handle("/health", health.NewHandler())
 
 	go func() {

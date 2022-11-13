@@ -9,38 +9,38 @@ import (
 	"strconv"
 )
 
-type DeleteConmorbilityService struct {
+type DeleteComorbidityService struct {
 	repoDB deleteComorbidity.Repository
 	logger kitlog.Logger
 }
 
-func NewDeleteConmorbilityService(repoDB deleteComorbidity.Repository, logger kitlog.Logger) *DeleteConmorbilityService {
-	return &DeleteConmorbilityService{repoDB: repoDB, logger: logger}
+func NewDeleteComorbidityService(repoDB deleteComorbidity.Repository, logger kitlog.Logger) *DeleteComorbidityService {
+	return &DeleteComorbidityService{repoDB: repoDB, logger: logger}
 }
 
-func (d DeleteConmorbilityService) DeleteConmorbilitySvc(ctx context.Context, Id string) (deleteComorbidity.DeleteConmorbilityResponse, error) {
+func (d DeleteComorbidityService) DeleteComorbiditySvc(ctx context.Context, Id string) (deleteComorbidity.DeleteComorbidityResponse, error) {
 	d.logger.Log("Starting subscription", constants.UUID, ctx.Value(constants.UUID))
 
 	IdConverter, _ := strconv.Atoi(Id)
 
-	resp, err := d.repoDB.DeleteConmorbilityRepo(ctx, int64(IdConverter))
+	resp, err := d.repoDB.DeleteComorbidityRepo(ctx, int64(IdConverter))
 	if err != nil {
 		d.logger.Log("Error trying to push repository subscription", "error", err.Error(), constants.UUID, ctx.Value(constants.UUID))
-		return deleteComorbidity.DeleteConmorbilityResponse{
+		return deleteComorbidity.DeleteComorbidityResponse{
 			ResponseCode: http.StatusBadRequest,
-			Messagge:     "failed",
+			Message:      "failed",
 		}, constants.ErrorDataError
 
 		if resp == false {
 			d.logger.Log("No affected rows", constants.UUID, ctx.Value(constants.UUID))
-			return deleteComorbidity.DeleteConmorbilityResponse{
+			return deleteComorbidity.DeleteComorbidityResponse{
 				ResponseCode: http.StatusBadRequest,
-				Messagge:     "failed",
+				Message:      "failed",
 			}, constants.ErrorDataError
 		}
 	}
-	return deleteComorbidity.DeleteConmorbilityResponse{
+	return deleteComorbidity.DeleteComorbidityResponse{
 		ResponseCode: http.StatusOK,
-		Messagge:     "Successful",
+		Message:      "Successful",
 	}, nil
 }

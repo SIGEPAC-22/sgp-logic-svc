@@ -8,19 +8,19 @@ import (
 	"sgp-logic-svc/kit/constants"
 )
 
-type DeleteConmorbilityRepository struct {
+type DeleteComorbidityRepository struct {
 	db     *sql.DB
 	logger kitlog.Logger
 }
 
-func NewDeleteConmorbilityRepository(db *sql.DB, logger kitlog.Logger) *DeleteConmorbilityRepository {
-	return &DeleteConmorbilityRepository{db: db, logger: logger}
+func NewDeleteComorbidityRepository(db *sql.DB, logger kitlog.Logger) *DeleteComorbidityRepository {
+	return &DeleteComorbidityRepository{db: db, logger: logger}
 }
 
-func (d DeleteConmorbilityRepository) DeleteConmorbilityRepo(ctx context.Context, Id int64) (bool, error) {
+func (d DeleteComorbidityRepository) DeleteComorbidityRepo(ctx context.Context, Id int64) (bool, error) {
 
 	config := goconfig.NewConfig("./application.yaml", goconfig.Yaml)
-	StatusInactive := config.GetInt("appProperties.deleteConmorbilityStatusInactive")
+	StatusInactive := config.GetInt("appProperties.deleteComorbidityStatusInactive")
 
 	sql, err := d.db.ExecContext(ctx, "UPDATE cby_comorbidity SET cby_id_state_data = ? WHERE cby_id_comorbidity = ?;", StatusInactive, Id)
 	d.logger.Log("query about to exec", "query", sql, constants.UUID, ctx.Value(constants.UUID))

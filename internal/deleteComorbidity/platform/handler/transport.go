@@ -11,29 +11,29 @@ import (
 	"sgp-logic-svc/kit/constants"
 )
 
-func NewDeleteConmorbilityHandler(path string, endpoints endpoint.Endpoint) http.Handler {
+func NewDeleteComorbidityHandler(path string, endpoints endpoint.Endpoint) http.Handler {
 	r := mux.NewRouter()
 	r.Handle(path,
 		httptransport.NewServer(endpoints,
-			DecodeRequestDeleteConmorbility,
-			EncodeRequestDeleteConmorbility,
+			DecodeRequestDeleteComorbidity,
+			EncodeRequestDeleteComorbidity,
 		)).Methods(http.MethodDelete)
 	return r
 }
 
-func DecodeRequestDeleteConmorbility(ctx context.Context, r *http.Request) (interface{}, error) {
+func DecodeRequestDeleteComorbidity(ctx context.Context, r *http.Request) (interface{}, error) {
 	processID, _ := uuid.NewUUID()
 	ctx = context.WithValue(ctx, constants.UUID, processID.String())
 	id := r.URL.Query().Get("id")
-	var confRequest DeleteConmorbilityInternalRequest
+	var confRequest DeleteComorbidityInternalRequest
 	confRequest.Id = id
 	confRequest.ctx = ctx
 	return confRequest, nil
 }
 
-func EncodeRequestDeleteConmorbility(ctx context.Context, w http.ResponseWriter, response interface{}) error {
+func EncodeRequestDeleteComorbidity(ctx context.Context, w http.ResponseWriter, response interface{}) error {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-	resp, _ := response.(DeleteConmorbilityInternalResponse)
+	resp, _ := response.(DeleteComorbidityInternalResponse)
 	if resp.Err != nil {
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		switch resp.Err {

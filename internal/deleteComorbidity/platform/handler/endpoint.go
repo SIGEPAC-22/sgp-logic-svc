@@ -6,23 +6,23 @@ import (
 	"sgp-logic-svc/internal/deleteComorbidity"
 )
 
-func MakeDeleteConmorbilityEndpoint(d deleteComorbidity.Service) endpoint.Endpoint {
+func MakeDeleteComorbidityEndpoint(d deleteComorbidity.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
-		req := request.(DeleteConmorbilityInternalRequest)
-		resp, err := d.DeleteConmorbilitySvc(req.ctx, req.Id)
-		return DeleteConmorbilityInternalResponse{
+		req := request.(DeleteComorbidityInternalRequest)
+		resp, err := d.DeleteComorbiditySvc(req.ctx, req.Id)
+		return DeleteComorbidityInternalResponse{
 			Response: resp,
 			Err:      err,
 		}, nil
 	}
 }
 
-type DeleteConmorbilityInternalResponse struct {
+type DeleteComorbidityInternalResponse struct {
 	Response interface{}
 	Err      error
 }
 
-type DeleteConmorbilityInternalRequest struct {
+type DeleteComorbidityInternalRequest struct {
 	Id  string `json:"id"`
 	ctx context.Context
 }
