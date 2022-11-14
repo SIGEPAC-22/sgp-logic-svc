@@ -15,6 +15,7 @@ paths:
 
   updateComorbidity: "/v1/sgp-logic-svc/updateComorbidity"
   updateSymptom: "/v1/sgp-logic-svc/updateSymptom"
+  updateInfoPatient: "/v1/sgp-logic-svc/updateInfoPatient"
 
   deleteComorbidity: "/v1/sgp-logic-svc/deleteComorbidity"
   deleteSymptom: "/v1/sgp-logic-svc/deleteSymptom"
