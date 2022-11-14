@@ -15,6 +15,9 @@ import (
 	"sgp-logic-svc/internal/createComorbidity/platform/handler"
 	"sgp-logic-svc/internal/createComorbidity/platform/storage/mysql"
 	"sgp-logic-svc/internal/createComorbidity/service"
+	handler7 "sgp-logic-svc/internal/createInfoPatient/platform/handler"
+	mysql7 "sgp-logic-svc/internal/createInfoPatient/platform/storage/mysql"
+	service7 "sgp-logic-svc/internal/createInfoPatient/service"
 	handler4 "sgp-logic-svc/internal/createSymptom/platform/handler"
 	mysql4 "sgp-logic-svc/internal/createSymptom/platform/storage/mysql"
 	service4 "sgp-logic-svc/internal/createSymptom/service"
@@ -81,6 +84,14 @@ func Run() {
 	createSymptomHandler := handler4.NewCreateSymptomHandler(config.GetString("paths.createSymptom"), createSymptomEndpoint)
 	//////////////////////CREATE SYMPTOM////////////////////////////////////////////////
 
+	//////////////////////CREATE INFO PATIENT////////////////////////////////////////////////
+	createInfoPatientRepo := mysql7.NewCreateInfoPatientRepository(db, kitlogger)
+	createInfoPatientService := service7.NewCreateInfoPatientSvc(createInfoPatientRepo, kitlogger)
+	createInfoPatientEndpoint := handler7.MakeCreateInfoPatientEndpoint(createInfoPatientService)
+	createInfoPatientEndpoint = handler7.CreateInfoPatientTransportMiddleware(kitlogger)(createInfoPatientEndpoint)
+	createInfoPatientHandler := handler7.NewCreateInfoPatientHandler(config.GetString("paths.createInfoPatient"), createInfoPatientEndpoint)
+	//////////////////////CREATE INFO PATIENT////////////////////////////////////////////////
+
 	//////////////////////UPDATE CONMORBILITY////////////////////////////////////////////////
 	updateComorbidityRepo := mysql2.NewUpdateComorbidityRepository(db, kitlogger)
 	updateComorbidityService := service2.NewUpdateComorbidityService(updateComorbidityRepo, kitlogger)
@@ -115,6 +126,7 @@ func Run() {
 
 	mux.Handle(config.GetString("paths.createComorbidity"), createComorbidityHandler)
 	mux.Handle(config.GetString("paths.createSymptom"), createSymptomHandler)
+	mux.Handle(config.GetString("paths.createInfoPatient"), createInfoPatientHandler)
 
 	mux.Handle(config.GetString("paths.updateComorbidity"), updateComorbidityHandler)
 	mux.Handle(config.GetString("paths.updateSymptom"), updateSymptomHandler)

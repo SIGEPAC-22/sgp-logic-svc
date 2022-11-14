@@ -11,6 +11,7 @@ datasource:
 paths:
   createComorbidity: "/v1/sgp-logic-svc/createComorbidity"
   createSymptom: "/v1/sgp-logic-svc/createSymptom"
+  createInfoPatient: "/v1/sgp-logic-svc/createInfoPatient"
 
   updateComorbidity: "/v1/sgp-logic-svc/updateComorbidity"
   updateSymptom: "/v1/sgp-logic-svc/updateSymptom"
