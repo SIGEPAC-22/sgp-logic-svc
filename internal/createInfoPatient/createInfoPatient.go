@@ -5,11 +5,13 @@ import (
 )
 
 type Repository interface {
-	CreateInfoPatientRepo(ctx context.Context, firstName string, secondName string, lastFirstName string, lastSecondName string, dateBirth string, documentType int, documentNumber string, cellphoneNumber string, phoneNumber string, responsibleFamily string, responsibleFamilyPhoneNumber string, department int, country int, patientFile int, patientSex int) (bool, error)
+	CreateInfoPatientRepo(ctx context.Context, firstName string, secondName string, lastFirstName string, lastSecondName string, dateBirth string, documentType int, documentNumber string, cellphoneNumber string, phoneNumber string, responsibleFamily string, responsibleFamilyPhoneNumber string, department int, patientSex int) (bool, error)
+	SelectInfoPatient(ctx context.Context, firstName string, secondName string, lastFirstName string, documentNumber string) (int, error)
+	CreatePatientFileRepo(ctx context.Context, id int, pregnat bool) (bool, error)
 }
 
 type Service interface {
-	CreateInfoPatientSvc(ctx context.Context, firstName string, secondName string, lastFirstName string, lastSecondName string, dateBirth string, documentType int, documentNumber string, cellphoneNumber string, phoneNumber string, responsibleFamily string, responsibleFamilyPhoneNumber string, department int, country int, patientFile int, patientSex int) (CreateInfoPatientResponse, error)
+	CreateInfoPatientSvc(ctx context.Context, firstName string, secondName string, lastFirstName string, lastSecondName string, dateBirth string, documentType int, documentNumber string, cellphoneNumber string, phoneNumber string, responsibleFamily string, responsibleFamilyPhoneNumber string, department int, patientSex int, pregnat bool) (CreateInfoPatientResponse, error)
 }
 
 type CreateInfoPatientRequest struct {
@@ -25,12 +27,15 @@ type CreateInfoPatientRequest struct {
 	ResponsibleFamily            string `json:"responsibleFamily"`
 	ResponsibleFamilyPhoneNumber string `json:"responsibleFamilyPhoneNumber"`
 	Department                   int    `json:"department"`
-	Country                      int    `json:"country"`
-	PatientFile                  int    `json:"patientFile"`
 	PatientSex                   int    `json:"patientSex"`
+	Pregnant                     bool   `json:"pregnant"`
 }
 
 type CreateInfoPatientResponse struct {
 	ResponseCode int    `json:"responseCode"`
 	Message      string `json:"message"`
+}
+
+type SelectInfoPatientResponse struct {
+	Id int `json:"id"`
 }

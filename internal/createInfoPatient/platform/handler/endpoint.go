@@ -9,7 +9,7 @@ import (
 func MakeCreateInfoPatientEndpoint(c createInfoPatient.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		req := request.(CreateInfoPatientInternalRequest)
-		resp, err := c.CreateInfoPatientSvc(req.ctx, req.FirstName, req.SecondName, req.LastFirstName, req.LastSecondName, req.DateBirth, req.DocumentType, req.DocumentNumber, req.CellPhoneNumber, req.PhoneNumber, req.ResponsibleFamily, req.ResponsibleFamilyPhoneNumber, req.Department, req.Country, req.PatientFile, req.PatientSex)
+		resp, err := c.CreateInfoPatientSvc(req.ctx, req.FirstName, req.SecondName, req.LastFirstName, req.LastSecondName, req.DateBirth, req.DocumentType, req.DocumentNumber, req.CellPhoneNumber, req.PhoneNumber, req.ResponsibleFamily, req.ResponsibleFamilyPhoneNumber, req.Department, req.PatientSex, req.Pregnant)
 		return CreateInfoPatientInternalResponse{
 			Response: resp,
 			Err:      err,
@@ -35,8 +35,7 @@ type CreateInfoPatientInternalRequest struct {
 	ResponsibleFamily            string `json:"responsibleFamily"`
 	ResponsibleFamilyPhoneNumber string `json:"responsibleFamilyPhoneNumber"`
 	Department                   int    `json:"department"`
-	Country                      int    `json:"country"`
-	PatientFile                  int    `json:"patientFile"`
 	PatientSex                   int    `json:"patientSex"`
+	Pregnant                     bool   `json:"pregnant"`
 	ctx                          context.Context
 }
