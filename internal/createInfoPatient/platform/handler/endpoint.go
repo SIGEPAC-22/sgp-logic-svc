@@ -9,7 +9,8 @@ import (
 func MakeCreateInfoPatientEndpoint(c createInfoPatient.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		req := request.(CreateInfoPatientInternalRequest)
-		resp, err := c.CreateInfoPatientSvc(req.ctx, req.FirstName, req.SecondName, req.LastFirstName, req.LastSecondName, req.DateBirth, req.DocumentType, req.DocumentNumber, req.CellPhoneNumber, req.PhoneNumber, req.ResponsibleFamily, req.ResponsibleFamilyPhoneNumber, req.Department, req.PatientSex, req.Pregnant)
+		resp, err := c.CreateInfoPatientSvc(req.ctx, req.FirstName, req.SecondName, req.LastFirstName, req.LastSecondName, req.DateBirth, req.DocumentType, req.DocumentNumber,
+			req.CellPhoneNumber, req.PhoneNumber, req.ResponsibleFamily, req.ResponsibleFamilyPhoneNumber, req.Department, req.PatientSex, req.Pregnant, req.Foreign)
 		return CreateInfoPatientInternalResponse{
 			Response: resp,
 			Err:      err,
@@ -28,14 +29,15 @@ type CreateInfoPatientInternalRequest struct {
 	LastFirstName                string `json:"lastFirstName"`
 	LastSecondName               string `json:"lastSecondName"`
 	DateBirth                    string `json:"dateBirth"`
-	DocumentType                 int    `json:"documentType"`
+	DocumentType                 string `json:"documentType"`
 	DocumentNumber               string `json:"documentNumber"`
 	CellPhoneNumber              string `json:"cellPhoneNumber"`
 	PhoneNumber                  string `json:"phoneNumber"`
 	ResponsibleFamily            string `json:"responsibleFamily"`
 	ResponsibleFamilyPhoneNumber string `json:"responsibleFamilyPhoneNumber"`
-	Department                   int    `json:"department"`
-	PatientSex                   int    `json:"patientSex"`
-	Pregnant                     bool   `json:"pregnant"`
+	Department                   string `json:"department"`
+	PatientSex                   string `json:"patientSex"`
+	Pregnant                     string `json:"pregnant"`
+	Foreign                      string `json:"foreign"`
 	ctx                          context.Context
 }

@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"sgp-logic-svc/internal/createInfoPatient"
 	"sgp-logic-svc/kit/constants"
+	"strconv"
 )
 
 type CreateInfoPatientSvc struct {
@@ -17,10 +18,28 @@ func NewCreateInfoPatientSvc(repoDB createInfoPatient.Repository, logger kitlog.
 	return &CreateInfoPatientSvc{repoDB: repoDB, logger: logger}
 }
 
-func (c CreateInfoPatientSvc) CreateInfoPatientSvc(ctx context.Context, firstName string, secondName string, lastFirstName string, lastSecondName string, dateBirth string, documentType int, documentNumber string, cellphoneNumber string, phoneNumber string, responsibleFamily string, responsibleFamilyPhoneNumber string, department int, patientSex int, pregnat bool) (createInfoPatient.CreateInfoPatientResponse, error) {
+func (c CreateInfoPatientSvc) CreateInfoPatientSvc(ctx context.Context, firstName string, secondName string, lastFirstName string, lastSecondName string, dateBirth string, documentType string, documentNumber string, cellphoneNumber string, phoneNumber string, responsibleFamily string, responsibleFamilyPhoneNumber string, department string, patientSex string, pregnant string, foreign string) (createInfoPatient.CreateInfoPatientResponse, error) {
 	c.logger.Log("Starting subscription", constants.UUID, ctx.Value(constants.UUID))
 
-	resp, err := c.repoDB.CreateInfoPatientRepo(ctx, firstName, secondName, lastFirstName, lastSecondName, dateBirth, documentType, documentNumber, cellphoneNumber, phoneNumber, responsibleFamily, responsibleFamilyPhoneNumber, department, patientSex)
+	convertDocumentType, _ := strconv.Atoi(documentType)
+	convertDepartment, _ := strconv.Atoi(department)
+	convertPatientSex, _ := strconv.Atoi(patientSex)
+	var pregnantBoolean bool
+	var foreignInteger int
+
+	if pregnant == "si" {
+		pregnantBoolean = true
+	} else if pregnant == "" {
+		pregnantBoolean = false
+	}
+
+	if foreign == "si" {
+		foreignInteger = 2
+	} else if foreign == "" {
+		foreignInteger = 1
+	}
+
+	resp, err := c.repoDB.CreateInfoPatientRepo(ctx, firstName, secondName, lastFirstName, lastSecondName, dateBirth, convertDocumentType, documentNumber, cellphoneNumber, phoneNumber, responsibleFamily, responsibleFamilyPhoneNumber, convertDepartment, convertPatientSex, foreignInteger)
 	if err != nil {
 		c.logger.Log("Error trying to push repository subscription", "error", err.Error(), constants.UUID, ctx.Value(constants.UUID))
 		return createInfoPatient.CreateInfoPatientResponse{
@@ -46,7 +65,7 @@ func (c CreateInfoPatientSvc) CreateInfoPatientSvc(ctx context.Context, firstNam
 		}, errRespInfoPatient
 	}
 
-	_, errPatientFile := c.repoDB.CreatePatientFileRepo(ctx, respInfoPatient, pregnat)
+	_, errPatientFile := c.repoDB.CreatePatientFileRepo(ctx, respInfoPatient, pregnantBoolean)
 	if errPatientFile != nil {
 		c.logger.Log("Error trying to push repository subscription", "error", errPatientFile.Error(), constants.UUID, ctx.Value(constants.UUID))
 		return createInfoPatient.CreateInfoPatientResponse{
