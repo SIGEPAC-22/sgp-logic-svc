@@ -9,7 +9,6 @@ import (
 	"github.com/gorilla/mux"
 	"net/http"
 	"sgp-logic-svc/kit/constants"
-	"strconv"
 )
 
 func NewUpdateInfoPatientHandler(path string, endpoints endpoint.Endpoint) http.Handler {
@@ -27,7 +26,7 @@ func DecodeRequestUpdateInfoPatient(ctx context.Context, r *http.Request) (inter
 	ctx = context.WithValue(ctx, constants.UUID, processID.String())
 	id := r.URL.Query().Get("id")
 	var confRequest UpdateInfoPatientInternalRequest
-	confRequest.Id, _ = strconv.Atoi(id)
+	confRequest.Id = id
 	err := json.NewDecoder(r.Body).Decode(&confRequest)
 	confRequest.ctx = ctx
 	return confRequest, err

@@ -24,21 +24,21 @@ type UpdateInfoPatientInternalResponse struct {
 }
 
 type UpdateInfoPatientInternalRequest struct {
-	Id                           int    `json:"id"`
+	Id                           string `json:"id"`
 	FirstName                    string `json:"firstName"`
 	SecondName                   string `json:"secondName"`
 	LastFirstName                string `json:"lastFirstName"`
 	LastSecondName               string `json:"lastSecondName"`
 	DateBirth                    string `json:"dateBirth"`
-	DocumentType                 int    `json:"documentType"`
+	DocumentType                 string `json:"documentType"`
 	DocumentNumber               string `json:"documentNumber"`
 	CellPhoneNumber              string `json:"cellPhoneNumber"`
 	PhoneNumber                  string `json:"phoneNumber"`
 	ResponsibleFamily            string `json:"responsibleFamily"`
 	ResponsibleFamilyPhoneNumber string `json:"responsibleFamilyPhoneNumber"`
-	Department                   int    `json:"department"`
-	Country                      int    `json:"country"`
-	PatientFile                  int    `json:"patientFile"`
-	PatientSex                   int    `json:"patientSex"`
+	Department                   string `json:"department"`
+	Country                      string `json:"country"`
+	PatientFile                  string `json:"patientFile"`
+	PatientSex                   string `json:"patientSex"`
 	ctx                          context.Context
 }
