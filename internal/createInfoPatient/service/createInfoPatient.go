@@ -24,20 +24,23 @@ func (c CreateInfoPatientSvc) CreateInfoPatientSvc(ctx context.Context, firstNam
 	convertDocumentType, _ := strconv.Atoi(documentType)
 	convertDepartment, _ := strconv.Atoi(department)
 	convertPatientSex, _ := strconv.Atoi(patientSex)
-	var pregnantBoolean bool
-	var foreignInteger int
+	foreignInteger, _ := strconv.Atoi(foreign)
+	//pregnantInteger, _ := strconv.Atoi(foreign)
 
-	if pregnant == "si" {
+	var pregnantBoolean bool
+	//var foreignInteger int
+
+	if pregnant == "1" {
 		pregnantBoolean = true
-	} else if pregnant == "" {
+	} else if pregnant == "0" {
 		pregnantBoolean = false
 	}
 
-	if foreign == "si" {
+	/*if foreign == "si" {
 		foreignInteger = 2
 	} else if foreign == "" {
 		foreignInteger = 1
-	}
+	}*/
 
 	resp, err := c.repoDB.CreateInfoPatientRepo(ctx, firstName, secondName, lastFirstName, lastSecondName, dateBirth, convertDocumentType, documentNumber, cellphoneNumber, phoneNumber, responsibleFamily, responsibleFamilyPhoneNumber, convertDepartment, convertPatientSex, foreignInteger)
 	if err != nil {
