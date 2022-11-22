@@ -22,8 +22,6 @@ func NewUpdateInfoPatientService(repoDB updateInfoPatient.Repository, logger kit
 func (u UpdateInfoPatientService) UpdateInfoPatientSvc(ctx context.Context, Id string, firstName string, secondName string, lastFirstName string, lastSecondName string, documentType string, documentNumber string, cellphoneNumber string, phoneNumber string, responsibleFamily string, responsibleFamilyPhoneNumber string, department string, foreign string) (updateInfoPatient.UpdateInfoPatientResponse, error) {
 	u.logger.Log("Starting Update Info Patient", constants.UUID, ctx.Value(constants.UUID))
 
-	var foreignInteger int
-
 	idConvert, _ := strconv.Atoi(Id)
 
 	selectRespDB, errSelect := u.repoDB.SelectInfoPatientRepo(ctx, idConvert)
@@ -41,11 +39,7 @@ func (u UpdateInfoPatientService) UpdateInfoPatientSvc(ctx context.Context, Id s
 	idDocumentType, _ := strconv.Atoi(documentType)
 	idDepartment, _ := strconv.Atoi(department)
 
-	if foreign == "si" {
-		foreignInteger = 2
-	} else if foreign == "" {
-		foreignInteger = 1
-	}
+	foreignInteger, _ := strconv.Atoi(foreign)
 
 	//resp, err := u.repoDB.UpdateInfoPatientRepo(ctx, Id, firstName, secondName, lastFirstName, lastSecondName, dateBirth, documentType, documentNumber, cellphoneNumber, phoneNumber, responsibleFamily, responsibleFamilyPhoneNumber, department, country, patientFile, patientSex)
 	resp, err := u.repoDB.UpdateInfoPatientRepo(ctx, idConvert, firstName, secondName, lastFirstName, lastSecondName, idDocumentType, documentNumber, cellphoneNumber, phoneNumber, responsibleFamily, responsibleFamilyPhoneNumber, idDepartment, foreignInteger)
