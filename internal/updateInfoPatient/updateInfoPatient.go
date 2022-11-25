@@ -6,12 +6,11 @@ import (
 
 type Repository interface {
 	SelectInfoPatientRepo(ctx context.Context, id int) (SelectInfoPatientResponse, error)
-	UpdateInfoPatientRepo(ctx context.Context, Id int, firstName string, secondName string, lastFirstName string, lastSecondName string, documentType int, documentNumber string, cellphoneNumber string, phoneNumber string, responsibleFamily string, responsibleFamilyPhoneNumber string, department int, foreign int) (bool, error)
+	UpdateInfoPatientRepo(ctx context.Context, Id int, firstName string, secondName string, lastFirstName string, lastSecondName string, documentType int, documentNumber string, cellphoneNumber string, phoneNumber string, responsibleFamily string, responsibleFamilyPhoneNumber string, department int) (bool, error)
 }
 
 type Service interface {
-	//UpdateInfoPatientSvc(ctx context.Context, Id int, firstName string, secondName string, lastFirstName string, lastSecondName string, dateBirth string, documentType int, documentNumber string, cellphoneNumber string, phoneNumber string, responsibleFamily string, responsibleFamilyPhoneNumber string, department int, country int, patientFile int, patientSex int) (UpdateInfoPatientResponse, error)
-	UpdateInfoPatientSvc(ctx context.Context, Id string, firstName string, secondName string, lastFirstName string, lastSecondName string, documentType string, documentNumber string, cellphoneNumber string, phoneNumber string, responsibleFamily string, responsibleFamilyPhoneNumber string, department string, foreign string) (UpdateInfoPatientResponse, error)
+	UpdateInfoPatientSvc(ctx context.Context, Id string, firstName string, secondName string, lastFirstName string, lastSecondName string, documentType string, documentNumber string, cellphoneNumber string, phoneNumber string, responsibleFamily string, responsibleFamilyPhoneNumber string, department string) (UpdateInfoPatientResponse, error)
 }
 
 type SelectInfoPatientResponse struct {
@@ -34,8 +33,6 @@ type UpdateInfoPatientRequest struct {
 	ResponsibleFamily            string `json:"responsibleFamily"`
 	ResponsibleFamilyPhoneNumber string `json:"responsibleFamilyPhoneNumber"`
 	Department                   string `json:"department"`
-	Country                      string `json:"country"`
-	//PatientFile                  int    `json:"patientFile"`
 }
 
 type UpdateInfoPatientResponse struct {

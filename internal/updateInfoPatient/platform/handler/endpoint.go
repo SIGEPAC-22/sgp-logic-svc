@@ -9,8 +9,7 @@ import (
 func MakeUpdateInfoPatientEndpoint(u updateInfoPatient.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		req := request.(UpdateInfoPatientInternalRequest)
-		//resp, err := u.UpdateInfoPatientSvc(req.ctx, req.Id, req.FirstName, req.SecondName, req.LastFirstName, req.LastSecondName, req.DateBirth, req.DocumentType, req.DocumentNumber, req.CellPhoneNumber, req.PhoneNumber, req.ResponsibleFamily, req.ResponsibleFamilyPhoneNumber, req.Department, req.Country, req.PatientFile, req.PatientSex)
-		resp, err := u.UpdateInfoPatientSvc(req.ctx, req.Id, req.FirstName, req.SecondName, req.LastFirstName, req.LastSecondName, req.DocumentType, req.DocumentNumber, req.CellPhoneNumber, req.PhoneNumber, req.ResponsibleFamily, req.ResponsibleFamilyPhoneNumber, req.Department, req.Foreign)
+		resp, err := u.UpdateInfoPatientSvc(req.ctx, req.Id, req.FirstName, req.SecondName, req.LastFirstName, req.LastSecondName, req.DocumentType, req.DocumentNumber, req.CellPhoneNumber, req.PhoneNumber, req.ResponsibleFamily, req.ResponsibleFamilyPhoneNumber, req.Department)
 		return UpdateInfoPatientInternalResponse{
 			Response: resp,
 			Err:      err,
@@ -36,7 +35,6 @@ type UpdateInfoPatientInternalRequest struct {
 	ResponsibleFamily            string `json:"responsibleFamily"`
 	ResponsibleFamilyPhoneNumber string `json:"responsibleFamilyPhoneNumber"`
 	Department                   string `json:"department"`
-	Foreign                      string `json:"foreign"`
 	PatientFile                  string `json:"patientFile"`
 	ctx                          context.Context
 }

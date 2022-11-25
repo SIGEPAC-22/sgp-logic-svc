@@ -19,7 +19,7 @@ func NewUpdateInfoPatientService(repoDB updateInfoPatient.Repository, logger kit
 }
 
 // func (u UpdateInfoPatientService) UpdateInfoPatientSvc(ctx context.Context, Id int, firstName string, secondName string, lastFirstName string, lastSecondName string, dateBirth string, documentType int, documentNumber string, cellphoneNumber string, phoneNumber string, responsibleFamily string, responsibleFamilyPhoneNumber string, department int, country int, patientFile int, patientSex int) (updateInfoPatient.UpdateInfoPatientResponse, error) {
-func (u UpdateInfoPatientService) UpdateInfoPatientSvc(ctx context.Context, Id string, firstName string, secondName string, lastFirstName string, lastSecondName string, documentType string, documentNumber string, cellphoneNumber string, phoneNumber string, responsibleFamily string, responsibleFamilyPhoneNumber string, department string, foreign string) (updateInfoPatient.UpdateInfoPatientResponse, error) {
+func (u UpdateInfoPatientService) UpdateInfoPatientSvc(ctx context.Context, Id string, firstName string, secondName string, lastFirstName string, lastSecondName string, documentType string, documentNumber string, cellphoneNumber string, phoneNumber string, responsibleFamily string, responsibleFamilyPhoneNumber string, department string) (updateInfoPatient.UpdateInfoPatientResponse, error) {
 	u.logger.Log("Starting Update Info Patient", constants.UUID, ctx.Value(constants.UUID))
 
 	idConvert, _ := strconv.Atoi(Id)
@@ -39,10 +39,7 @@ func (u UpdateInfoPatientService) UpdateInfoPatientSvc(ctx context.Context, Id s
 	idDocumentType, _ := strconv.Atoi(documentType)
 	idDepartment, _ := strconv.Atoi(department)
 
-	foreignInteger, _ := strconv.Atoi(foreign)
-
-	//resp, err := u.repoDB.UpdateInfoPatientRepo(ctx, Id, firstName, secondName, lastFirstName, lastSecondName, dateBirth, documentType, documentNumber, cellphoneNumber, phoneNumber, responsibleFamily, responsibleFamilyPhoneNumber, department, country, patientFile, patientSex)
-	resp, err := u.repoDB.UpdateInfoPatientRepo(ctx, idConvert, firstName, secondName, lastFirstName, lastSecondName, idDocumentType, documentNumber, cellphoneNumber, phoneNumber, responsibleFamily, responsibleFamilyPhoneNumber, idDepartment, foreignInteger)
+	resp, err := u.repoDB.UpdateInfoPatientRepo(ctx, idConvert, firstName, secondName, lastFirstName, lastSecondName, idDocumentType, documentNumber, cellphoneNumber, phoneNumber, responsibleFamily, responsibleFamilyPhoneNumber, idDepartment)
 	if err != nil {
 		u.logger.Log("Error trying to push repository subscription", "error", err.Error(), constants.UUID, ctx.Value(constants.UUID))
 		return updateInfoPatient.UpdateInfoPatientResponse{
