@@ -81,7 +81,7 @@ pipeline {
         }
       }
       steps {
-        echo 'SonarQube'
+        echo 'Cucumber Tests'
       }
     }
     stage('Deploy to QA') {
@@ -102,13 +102,13 @@ pipeline {
             docker stop ${name_final}
             docker rm -vf ${name_final}
             docker build . -t ${name_final}
-            docker run -dt -p 30002:90 --name ${name_final} ${name_final}
+            docker run -dt -p 30102:90 --name ${name_final} ${name_final}
             docker system prune -f
 	    '''
           } else {
             sh '''
             docker build . -t ${name_final}
-            docker run -dt -p 30002:90 --name ${name_final} ${name_final}
+            docker run -dt -p 30102:90 --name ${name_final} ${name_final}
             docker system prune -f
 	    '''
           }
@@ -141,13 +141,13 @@ pipeline {
             docker stop ${name_final}
             docker rm -vf ${name_final}
             docker build . -t ${name_final}
-            docker run -dt -p 30002:90 --name ${name_final} ${name_final}
+            docker run -dt -p 30202:90 --name ${name_final} ${name_final}
             docker system prune -f
 	    '''
           } else {
             sh '''
             docker build . -t ${name_final}
-            docker run -dt -p 30002:90 --name ${name_final} ${name_final}
+            docker run -dt -p 30202:90 --name ${name_final} ${name_final}
             docker system prune -f
 	    '''
           }

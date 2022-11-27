@@ -12,15 +12,30 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"sgp-logic-svc/internal/createConmorbility/platform/handler"
-	"sgp-logic-svc/internal/createConmorbility/platform/storage/mysql"
-	"sgp-logic-svc/internal/createConmorbility/service"
-	handler3 "sgp-logic-svc/internal/deleteConmorbility/platform/handler"
-	mysql3 "sgp-logic-svc/internal/deleteConmorbility/platform/storage/mysql"
-	service3 "sgp-logic-svc/internal/deleteConmorbility/service"
-	handler2 "sgp-logic-svc/internal/updateConmorbility/platform/handler"
-	mysql2 "sgp-logic-svc/internal/updateConmorbility/platform/storage/mysql"
-	service2 "sgp-logic-svc/internal/updateConmorbility/service"
+	"sgp-logic-svc/internal/createComorbidity/platform/handler"
+	"sgp-logic-svc/internal/createComorbidity/platform/storage/mysql"
+	"sgp-logic-svc/internal/createComorbidity/service"
+	handler7 "sgp-logic-svc/internal/createInfoPatient/platform/handler"
+	mysql7 "sgp-logic-svc/internal/createInfoPatient/platform/storage/mysql"
+	service7 "sgp-logic-svc/internal/createInfoPatient/service"
+	handler4 "sgp-logic-svc/internal/createSymptom/platform/handler"
+	mysql4 "sgp-logic-svc/internal/createSymptom/platform/storage/mysql"
+	service4 "sgp-logic-svc/internal/createSymptom/service"
+	handler3 "sgp-logic-svc/internal/deleteComorbidity/platform/handler"
+	mysql3 "sgp-logic-svc/internal/deleteComorbidity/platform/storage/mysql"
+	service3 "sgp-logic-svc/internal/deleteComorbidity/service"
+	handler5 "sgp-logic-svc/internal/deleteSymptom/platform/handler"
+	mysql5 "sgp-logic-svc/internal/deleteSymptom/platform/storage/mysql"
+	service5 "sgp-logic-svc/internal/deleteSymptom/service"
+	handler2 "sgp-logic-svc/internal/updateComorbidity/platform/handler"
+	mysql2 "sgp-logic-svc/internal/updateComorbidity/platform/storage/mysql"
+	service2 "sgp-logic-svc/internal/updateComorbidity/service"
+	handler8 "sgp-logic-svc/internal/updateInfoPatient/platform/handler"
+	mysql8 "sgp-logic-svc/internal/updateInfoPatient/platform/storage/mysql"
+	service8 "sgp-logic-svc/internal/updateInfoPatient/service"
+	handler6 "sgp-logic-svc/internal/updateSymptom/platform/handler"
+	mysql6 "sgp-logic-svc/internal/updateSymptom/platform/storage/mysql"
+	service6 "sgp-logic-svc/internal/updateSymptom/service"
 	"syscall"
 )
 
@@ -57,32 +72,79 @@ func Run() {
 	}
 
 	//////////////////////CREATE CONMORBILITY////////////////////////////////////////////////
-	createConmorbilityRepo := mysql.NewCreateConmorbilityRepository(db, kitlogger)
-	createConmorbilityService := service.NewCreateConmorbilitySvc(createConmorbilityRepo, kitlogger)
-	createConmorbilityEndpoint := handler.MakeCreateConmorbilityEndpoint(createConmorbilityService)
-	createConmorbilityEndpoint = handler.CreateConmorbilityTransportMiddleware(kitlogger)(createConmorbilityEndpoint)
-	createConmorbilityHandler := handler.NewCreateConmorbilityHandler(config.GetString("paths.createConmorbility"), createConmorbilityEndpoint)
+	createComorbidityRepo := mysql.NewCreateComorbidityRepository(db, kitlogger)
+	createComorbidityService := service.NewCreateComorbiditySvc(createComorbidityRepo, kitlogger)
+	createComorbidityEndpoint := handler.MakeCreateComorbidityEndpoint(createComorbidityService)
+	createComorbidityEndpoint = handler.CreateComorbidityTransportMiddleware(kitlogger)(createComorbidityEndpoint)
+	createComorbidityHandler := handler.NewCreateComorbidityHandler(config.GetString("paths.createComorbidity"), createComorbidityEndpoint)
 	//////////////////////CREATE CONMORBILITY////////////////////////////////////////////////
 
+	//////////////////////CREATE SYMPTOM////////////////////////////////////////////////
+	createSymptomRepo := mysql4.NewCreateSymptomRepository(db, kitlogger)
+	createSymptomService := service4.NewCreateSymptomSvc(createSymptomRepo, kitlogger)
+	createSymptomEndpoint := handler4.MakeCreateSymptomEndpoint(createSymptomService)
+	createSymptomEndpoint = handler4.CreateSymptomTransportMiddleware(kitlogger)(createSymptomEndpoint)
+	createSymptomHandler := handler4.NewCreateSymptomHandler(config.GetString("paths.createSymptom"), createSymptomEndpoint)
+	//////////////////////CREATE SYMPTOM////////////////////////////////////////////////
+
+	//////////////////////CREATE INFO PATIENT////////////////////////////////////////////////
+	createInfoPatientRepo := mysql7.NewCreateInfoPatientRepository(db, kitlogger)
+	createInfoPatientService := service7.NewCreateInfoPatientSvc(createInfoPatientRepo, kitlogger)
+	createInfoPatientEndpoint := handler7.MakeCreateInfoPatientEndpoint(createInfoPatientService)
+	createInfoPatientEndpoint = handler7.CreateInfoPatientTransportMiddleware(kitlogger)(createInfoPatientEndpoint)
+	createInfoPatientHandler := handler7.NewCreateInfoPatientHandler(config.GetString("paths.createInfoPatient"), createInfoPatientEndpoint)
+	//////////////////////CREATE INFO PATIENT////////////////////////////////////////////////
+
 	//////////////////////UPDATE CONMORBILITY////////////////////////////////////////////////
-	updateConmorbilityRepo := mysql2.NewUpdateConmorbilityRepository(db, kitlogger)
-	updateConmorbilityService := service2.NewUpdateConmorbilityService(updateConmorbilityRepo, kitlogger)
-	updateConmorbilityEndpoint := handler2.MakeUpdateUpdateConmorbilityEndpoint(updateConmorbilityService)
-	updateConmorbilityEndpoint = handler2.UpdateConmorbilityTransportMiddleware(kitlogger)(updateConmorbilityEndpoint)
-	updateConmorbilityHandler := handler2.NewUpdateConmorbilityHandler(config.GetString("paths.updateConmorbility"), updateConmorbilityEndpoint)
+	updateComorbidityRepo := mysql2.NewUpdateComorbidityRepository(db, kitlogger)
+	updateComorbidityService := service2.NewUpdateComorbidityService(updateComorbidityRepo, kitlogger)
+	updateComorbidityEndpoint := handler2.MakeUpdateComorbidityEndpoint(updateComorbidityService)
+	updateComorbidityEndpoint = handler2.UpdateComorbidityTransportMiddleware(kitlogger)(updateComorbidityEndpoint)
+	updateComorbidityHandler := handler2.NewUpdateComorbidityHandler(config.GetString("paths.updateComorbidity"), updateComorbidityEndpoint)
 	//////////////////////UPDATE CONMORBILITY////////////////////////////////////////////////
 
+	//////////////////////UPDATE INFO PATIENT////////////////////////////////////////////////
+	updateInfoPatientRepo := mysql8.NewUpdateInfoPatientRepository(db, kitlogger)
+	updateInfoPatientService := service8.NewUpdateInfoPatientService(updateInfoPatientRepo, kitlogger)
+	updateInfoPatientEndpoint := handler8.MakeUpdateInfoPatientEndpoint(updateInfoPatientService)
+	updateInfoPatientEndpoint = handler8.UpdateInfoPatientTransportMiddleware(kitlogger)(updateInfoPatientEndpoint)
+	updateInfoPatientHandler := handler8.NewUpdateInfoPatientHandler(config.GetString("paths.updateInfoPatient"), updateInfoPatientEndpoint)
+	//////////////////////UPDATE INFO PATIENT////////////////////////////////////////////////
+
+	//////////////////////UPDATE SYMPTOM////////////////////////////////////////////////
+	updateSymptomRepo := mysql6.NewUpdateSymptomRepository(db, kitlogger)
+	updateSymptomService := service6.NewUpdateSymptomService(updateSymptomRepo, kitlogger)
+	updateSymptomEndpoint := handler6.MakeUpdateSymptomEndpoint(updateSymptomService)
+	updateSymptomEndpoint = handler6.UpdateSymptomTransportMiddleware(kitlogger)(updateSymptomEndpoint)
+	updateSymptomHandler := handler6.NewUpdateSymptomHandler(config.GetString("paths.updateSymptom"), updateSymptomEndpoint)
+	//////////////////////UPDATE SYMPTOM////////////////////////////////////////////////
+
 	//////////////////////DELETE CONMORBILITY////////////////////////////////////////////////
-	deleteConmorbilityRepo := mysql3.NewDeleteConmorbilityRepository(db, kitlogger)
-	deleteConmorbilityService := service3.NewDeleteConmorbilityService(deleteConmorbilityRepo, kitlogger)
-	deleteConmorbilityEndpoint := handler3.MakeDeleteConmorbilityEndpoint(deleteConmorbilityService)
-	deleteConmorbilityEndpoint = handler3.DeleteConmorbilityTransportMiddleware(kitlogger)(deleteConmorbilityEndpoint)
-	deleteConmorbilityHandler := handler3.NewDeleteConmorbilityHandler(config.GetString("paths.deleteConmorbility"), deleteConmorbilityEndpoint)
+	deleteComorbidityRepo := mysql3.NewDeleteComorbidityRepository(db, kitlogger)
+	deleteComorbidityService := service3.NewDeleteComorbidityService(deleteComorbidityRepo, kitlogger)
+	deleteComorbidityEndpoint := handler3.MakeDeleteComorbidityEndpoint(deleteComorbidityService)
+	deleteComorbidityEndpoint = handler3.DeleteComorbidityTransportMiddleware(kitlogger)(deleteComorbidityEndpoint)
+	deleteComorbidityHandler := handler3.NewDeleteComorbidityHandler(config.GetString("paths.deleteComorbidity"), deleteComorbidityEndpoint)
 	//////////////////////DELETE CONMORBILITY////////////////////////////////////////////////
 
-	mux.Handle(config.GetString("paths.createConmorbility"), createConmorbilityHandler)
-	mux.Handle(config.GetString("paths.updateConmorbility"), updateConmorbilityHandler)
-	mux.Handle(config.GetString("paths.deleteConmorbility"), deleteConmorbilityHandler)
+	//////////////////////DELETE SYMPTOM////////////////////////////////////////////////
+	deleteSymptomRepo := mysql5.NewDeleteSymptomRepository(db, kitlogger)
+	deleteSymptomService := service5.NewDeleteSymptomService(deleteSymptomRepo, kitlogger)
+	deleteSymptomEndpoint := handler5.MakeDeleteSymptomEndpoint(deleteSymptomService)
+	deleteSymptomEndpoint = handler5.DeleteSymptomTransportMiddleware(kitlogger)(deleteSymptomEndpoint)
+	deleteSymptomHandler := handler5.NewDeleteSymptomHandler(config.GetString("paths.deleteSymptom"), deleteSymptomEndpoint)
+	//////////////////////DELETE SYMPTOM////////////////////////////////////////////////
+
+	mux.Handle(config.GetString("paths.createComorbidity"), createComorbidityHandler)
+	mux.Handle(config.GetString("paths.createSymptom"), createSymptomHandler)
+	mux.Handle(config.GetString("paths.createInfoPatient"), createInfoPatientHandler)
+
+	mux.Handle(config.GetString("paths.updateComorbidity"), updateComorbidityHandler)
+	mux.Handle(config.GetString("paths.updateSymptom"), updateSymptomHandler)
+	mux.Handle(config.GetString("paths.updateInfoPatient"), updateInfoPatientHandler)
+
+	mux.Handle(config.GetString("paths.deleteComorbidity"), deleteComorbidityHandler)
+	mux.Handle(config.GetString("paths.deleteSymptom"), deleteSymptomHandler)
 	mux.Handle("/health", health.NewHandler())
 
 	go func() {
