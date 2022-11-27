@@ -9,10 +9,17 @@ datasource:
   dbname: "sgp_info_svc"
 
 paths:
-  createConmorbility: "/v1/sgp-logic-svc/createConmorbility"
-  updateConmorbility: "/v1/pr-logic-svc/updateConmorbility"
-  deleteConmorbility: "/v1/pr-logic-svc/deleteConmorbility"
+  createComorbidity: "/v1/sgp-logic-svc/createComorbidity"
+  createSymptom: "/v1/sgp-logic-svc/createSymptom"
+  createInfoPatient: "/v1/sgp-logic-svc/createInfoPatient"
+
+  updateComorbidity: "/v1/sgp-logic-svc/updateComorbidity"
+  updateSymptom: "/v1/sgp-logic-svc/updateSymptom"
+  updateInfoPatient: "/v1/sgp-logic-svc/updateInfoPatient"
+
+  deleteComorbidity: "/v1/sgp-logic-svc/deleteComorbidity"
+  deleteSymptom: "/v1/sgp-logic-svc/deleteSymptom"
 
 appProperties:
-  createConmorbilityStatusInitial: 1
-  deleteConmorbilityStatusInactive: 2
+  createComorbidityStatusInitial: 1
+  deleteComorbidityStatusInactive: 2
