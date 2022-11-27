@@ -1,11 +1,11 @@
 server:
-  port: "92"
+  port: "90"
 
 
 datasource:
-  host: "localhost:3306"
-  user: "root"
-  pass: "12345"
+  host: "sgp-info-svc.csntzsasnlad.us-east-1.rds.amazonaws.com:3306"
+  user: "sgpinfosvc"
+  pass: "test1234"
   dbname: "sgp_info_svc"
 
 paths:
