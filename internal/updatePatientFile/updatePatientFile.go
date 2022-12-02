@@ -6,7 +6,7 @@ import (
 
 type Repository interface {
 	SelectPatientFileCBXRepo(ctx context.Context, idPatient int, idPatientFile int) (SelectPatientFileCbxResponse, error)
-	UpdatePatientFileRepo(ctx context.Context, idPatient string, idPatientFile string, statePatient string, highDate string, lowDate string) (bool, error)
+	UpdatePatientFileRepo(ctx context.Context, idPatient int, idPatientFile int, statePatient string, highDate string, lowDate string) (bool, error)
 	SelectPatientHasSymptom(ctx context.Context, idSymptom int, idPatientFile int) (SelectPatientSymptom, error)
 	CreatePatientSymptom(ctx context.Context, idSymptom int, idPatientFile int)
 	DeletePatientSymptom(ctx context.Context, idPatientFile int) (bool, error)
@@ -30,7 +30,7 @@ type UpdatePatientFileRequest struct {
 }
 
 type SelectPatientFileCbxResponse struct {
-	StatePatient string `json:"statePatient"`
+	StatePatient int    `json:"statePatient"`
 	HighDate     string `json:"highDate"`
 	LowDate      string `json:"lowDate"`
 }

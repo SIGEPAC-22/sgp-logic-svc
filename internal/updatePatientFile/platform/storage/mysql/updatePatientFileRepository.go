@@ -35,9 +35,20 @@ func (u UpdatePatientFileRepository) SelectPatientFileCBXRepo(ctx context.Contex
 	return resp, nil
 }
 
-func (u UpdatePatientFileRepository) UpdatePatientFileRepo(ctx context.Context, idPatient string, idPatientFile string, statePatient string, highDate string, lowDate string) (bool, error) {
-	//TODO implement me
-	panic("implement me")
+func (u UpdatePatientFileRepository) UpdatePatientFileRepo(ctx context.Context, idPatient int, idPatientFile int, statePatient string, highDate string, lowDate string) (bool, error) {
+	sql, err := u.db.ExecContext(ctx, "UPDATE pfl_patient_file SET pfl_id_state_patient = ?, pfl_high_date = ?, pfl_low_date = ? WHERE pfl_id_patient_file = ? AND pfl_id_patient = ?;", statePatient, highDate, lowDate, idPatientFile, idPatient)
+
+	u.logger.Log("query about to exec", "query", sql, constants.UUID, ctx.Value(constants.UUID))
+	if err != nil {
+		u.logger.Log("Error when trying to update information", "error", err.Error(), constants.UUID, ctx.Value(constants.UUID))
+		return false, err
+		rows, _ := sql.RowsAffected()
+		if rows != 1 {
+			u.logger.Log("zero rows affected", constants.UUID, ctx.Value(constants.UUID))
+			return false, err
+		}
+	}
+	return true, nil
 }
 
 func (u UpdatePatientFileRepository) SelectPatientHasSymptom(ctx context.Context, idSymptom int, idPatientFile int) (updatePatientFile.SelectPatientSymptom, error) {

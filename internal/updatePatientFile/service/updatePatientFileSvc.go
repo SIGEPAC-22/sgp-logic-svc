@@ -25,6 +25,19 @@ func (u UpdatePatientFileService) UpdatePatientFileSvc(ctx context.Context, idPa
 
 	respSelectCbx, errSelect := u.repoDB.SelectPatientFileCBXRepo(ctx, idPatientConvert, idPatientFileConvert)
 	if errSelect != nil {
+
+	}
+	if statePatient == "" {
+		statePatient = strconv.FormatInt(int64(respSelectCbx.StatePatient), 10)
+	}
+	if highDate == "" {
+		highDate = respSelectCbx.HighDate
+	}
+	if lowDate == "" {
+		lowDate = respSelectCbx.LowDate
+	}
+	update, err := u.repoDB.UpdatePatientFileRepo(ctx, idPatientConvert, idPatientFileConvert, statePatient, highDate, lowDate)
+	if err != nil {
 		
 	}
 	//SELECT PARA IR A TRAER LA INFO DE LOS CBX
