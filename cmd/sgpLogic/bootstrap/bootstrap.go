@@ -119,7 +119,7 @@ func Run() {
 	updateInfoPatientFileService := service9.NewUpdatePatientFileService(updateInfoPatientFileRepo, kitlogger)
 	updateInfoPatientFileEndpoint := handler9.MakeUpdatePatientFileEndpoint(updateInfoPatientFileService)
 	updateInfoPatientFileEndpoint = handler9.UpdatePatientFileTransportMiddleware(kitlogger)(updateInfoPatientFileEndpoint)
-	updateInfoPatientFileHandler := handler9.NewUpdatePatientFileHandler(config.GetString("paths.updatePatientFile"), updateInfoPatientEndpoint)
+	updateInfoPatientFileHandler := handler9.NewUpdatePatientFileHandler(config.GetString("paths.updatePatientFile"), updateInfoPatientFileEndpoint)
 	//////////////////////UPDATE INFO PATIENT////////////////////////////////////////////////
 
 	//////////////////////UPDATE SYMPTOM////////////////////////////////////////////////

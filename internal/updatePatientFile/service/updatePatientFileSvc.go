@@ -31,7 +31,7 @@ func (u UpdatePatientFileService) UpdatePatientFileSvc(ctx context.Context, idPa
 	//"GRIPE, TOS"
 	//"GRIPE, TOS"
 
-	//LOGICA MATCH
+	//LOGICA MATCHpos
 	//CREATE OR DELETE
 
 	//SELECT PARA TRAER LOS COMORBIDITY RELACIONADOS AL ID ID
