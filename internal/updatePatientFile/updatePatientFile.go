@@ -6,13 +6,13 @@ import (
 
 type Repository interface {
 	SelectPatientFileCBXRepo(ctx context.Context, idPatient int, idPatientFile int) (SelectPatientFileCbxResponse, error)
-	UpdatePatientFileRepo(ctx context.Context, idPatient int, idPatientFile int, statePatient string, highDate string, lowDate string) (bool, error)
-	SelectPatientHasSymptom(ctx context.Context, idSymptom int, idPatientFile int) (SelectPatientSymptom, error)
-	CreatePatientSymptom(ctx context.Context, idSymptom int, idPatientFile int)
-	DeletePatientSymptom(ctx context.Context, idPatientFile int) (bool, error)
-	SelectPatientHasComorbidity(ctx context.Context, idComorbidity int, idPatientFile int) (SelectPatientComorbidity, error)
-	CreatePatientComorbidity(ctx context.Context, idComorbidity int, idPatientFile int)
-	DeletePatientComorbidity(ctx context.Context, idPatientFile int) (bool, error)
+	UpdatePatientFileRepo(ctx context.Context, idPatient int, idPatientFile int, statePatient int, highDate string, lowDate string) (bool, error)
+	SelectPatientHasSymptom(ctx context.Context, idPatientFile int) ([]int, error)
+	CreatePatientSymptom(ctx context.Context, idSymptom int, idPatientFile int) (bool, error)
+	DeletePatientSymptom(ctx context.Context, idSymptom, idPatientFile int) (bool, error)
+	SelectPatientHasComorbidity(ctx context.Context, idPatientFile int) ([]int, error)
+	CreatePatientComorbidity(ctx context.Context, idComorbidity int, idPatientFile int) (bool, error)
+	DeletePatientComorbidity(ctx context.Context, idComorbidity, idPatientFile int) (bool, error)
 }
 
 type Service interface {

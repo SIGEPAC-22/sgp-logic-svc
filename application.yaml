@@ -25,3 +25,8 @@ paths:
 appProperties:
   createComorbidityStatusInitial: 1
   deleteComorbidityStatusInactive: 2
+
+app-PropertiesUpdateBot:
+  date: "2006-01-02"
+  false: false
+  true: true
