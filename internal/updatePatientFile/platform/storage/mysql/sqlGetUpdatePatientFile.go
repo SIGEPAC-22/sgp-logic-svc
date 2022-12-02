@@ -1,7 +1,7 @@
 package mysql
 
 type sqlGetUpdatePatientFile struct {
-	DocumentType int `db:"pat_id_document_type"`
-	Department   int `db:"pat_id_department"`
-	Pregnant     int `db:"pfl_pregnant"`
+	StatePatient string `db:"pfl_id_state_patient"`
+	HighDate     string `db:"pfl_high_date"`
+	LowDate      string `db:"pfl_low_date"`
 }

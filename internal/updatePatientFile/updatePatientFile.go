@@ -5,7 +5,7 @@ import (
 )
 
 type Repository interface {
-	SelectPatientFileCBXRepo(ctx context.Context, id int) (SelectPatientFileCbxResponse, error)
+	SelectPatientFileCBXRepo(ctx context.Context, idPatient int, idPatientFile int) (SelectPatientFileCbxResponse, error)
 	UpdatePatientFileRepo(ctx context.Context, idPatient string, idPatientFile string, statePatient string, highDate string, lowDate string) (bool, error)
 	SelectPatientHasSymptom(ctx context.Context, idSymptom int, idPatientFile int) (SelectPatientSymptom, error)
 	CreatePatientSymptom(ctx context.Context, idSymptom int, idPatientFile int)
