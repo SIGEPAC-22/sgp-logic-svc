@@ -33,6 +33,9 @@ import (
 	handler8 "sgp-logic-svc/internal/updateInfoPatient/platform/handler"
 	mysql8 "sgp-logic-svc/internal/updateInfoPatient/platform/storage/mysql"
 	service8 "sgp-logic-svc/internal/updateInfoPatient/service"
+	handler9 "sgp-logic-svc/internal/updatePatientFile/platform/handler"
+	mysql9 "sgp-logic-svc/internal/updatePatientFile/platform/storage/mysql"
+	service9 "sgp-logic-svc/internal/updatePatientFile/service"
 	handler6 "sgp-logic-svc/internal/updateSymptom/platform/handler"
 	mysql6 "sgp-logic-svc/internal/updateSymptom/platform/storage/mysql"
 	service6 "sgp-logic-svc/internal/updateSymptom/service"
@@ -111,6 +114,14 @@ func Run() {
 	updateInfoPatientHandler := handler8.NewUpdateInfoPatientHandler(config.GetString("paths.updateInfoPatient"), updateInfoPatientEndpoint)
 	//////////////////////UPDATE INFO PATIENT////////////////////////////////////////////////
 
+	//////////////////////UPDATE INFO PATIENT FILE////////////////////////////////////////////////
+	updateInfoPatientFileRepo := mysql9.NewUpdatePatientFileRepository(db, kitlogger)
+	updateInfoPatientFileService := service9.NewUpdatePatientFileService(updateInfoPatientFileRepo, kitlogger)
+	updateInfoPatientFileEndpoint := handler9.MakeUpdatePatientFileEndpoint(updateInfoPatientFileService)
+	updateInfoPatientFileEndpoint = handler9.UpdatePatientFileTransportMiddleware(kitlogger)(updateInfoPatientFileEndpoint)
+	updateInfoPatientFileHandler := handler9.NewUpdatePatientFileHandler(config.GetString("paths.updatePatientFile"), updateInfoPatientEndpoint)
+	//////////////////////UPDATE INFO PATIENT////////////////////////////////////////////////
+
 	//////////////////////UPDATE SYMPTOM////////////////////////////////////////////////
 	updateSymptomRepo := mysql6.NewUpdateSymptomRepository(db, kitlogger)
 	updateSymptomService := service6.NewUpdateSymptomService(updateSymptomRepo, kitlogger)
@@ -145,6 +156,8 @@ func Run() {
 
 	mux.Handle(config.GetString("paths.deleteComorbidity"), deleteComorbidityHandler)
 	mux.Handle(config.GetString("paths.deleteSymptom"), deleteSymptomHandler)
+
+	mux.Handle(config.GetString("paths.updatePatientFile"), updateInfoPatientFileHandler)
 	mux.Handle("/health", health.NewHandler())
 
 	go func() {

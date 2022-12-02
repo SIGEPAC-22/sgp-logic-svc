@@ -24,9 +24,11 @@ func NewUpdatePatientFileHandler(path string, endpoints endpoint.Endpoint) http.
 func DecodeRequestUpdatePatientFile(ctx context.Context, r *http.Request) (interface{}, error) {
 	processID, _ := uuid.NewUUID()
 	ctx = context.WithValue(ctx, constants.UUID, processID.String())
-	id := r.URL.Query().Get("id")
+	idPatient := r.URL.Query().Get("idPatient")
+	idPatientFile := r.URL.Query().Get("idPatientFile")
 	var confRequest UpdatePatientFileInternalRequest
-	confRequest.Id = id
+	confRequest.IdPatient = idPatient
+	confRequest.IdPatientFile = idPatientFile
 	err := json.NewDecoder(r.Body).Decode(&confRequest)
 	confRequest.ctx = ctx
 	return confRequest, err
