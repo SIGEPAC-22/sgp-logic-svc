@@ -18,7 +18,6 @@ func NewUpdateInfoPatientService(repoDB updateInfoPatient.Repository, logger kit
 	return &UpdateInfoPatientService{repoDB: repoDB, logger: logger}
 }
 
-// func (u UpdateInfoPatientService) UpdateInfoPatientSvc(ctx context.Context, Id int, firstName string, secondName string, lastFirstName string, lastSecondName string, dateBirth string, documentType int, documentNumber string, cellphoneNumber string, phoneNumber string, responsibleFamily string, responsibleFamilyPhoneNumber string, department int, country int, patientFile int, patientSex int) (updateInfoPatient.UpdateInfoPatientResponse, error) {
 func (u UpdateInfoPatientService) UpdateInfoPatientSvc(ctx context.Context, Id string, firstName string, secondName string, lastFirstName string, lastSecondName string, documentType string, documentNumber string, cellphoneNumber string, phoneNumber string, responsibleFamily string, responsibleFamilyPhoneNumber string, department string) (updateInfoPatient.UpdateInfoPatientResponse, error) {
 	u.logger.Log("Starting Update Info Patient", constants.UUID, ctx.Value(constants.UUID))
 
