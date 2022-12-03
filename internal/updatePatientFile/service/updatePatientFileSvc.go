@@ -102,6 +102,20 @@ func (u UpdatePatientFileService) UpdatePatientFileSvc(ctx context.Context, idPa
 				num = respSelectComorbidity[i]
 				arrayDeleteComorbidity = append(arrayDeleteComorbidity, num)
 			}
+		} else if len(arrayTransformReqIntComorbidity) == len(respSelectComorbidity) {
+			for _, arrayCreateList := range arrayTransformReqIntComorbidity {
+				_, errResp := u.repoDB.CreatePatientComorbidity(ctx, arrayCreateList, idPatientFileConvert)
+				if errResp != nil {
+					continue
+				}
+			}
+			for _, arrayDeleteList := range respSelectComorbidity {
+				_, errResp := u.repoDB.DeletePatientComorbidity(ctx, arrayDeleteList, idPatientFileConvert)
+				if errResp != nil {
+					continue
+				}
+			}
+
 		}
 
 		if len(arrayCreateComorbidity) > 0 {
@@ -118,7 +132,7 @@ func (u UpdatePatientFileService) UpdatePatientFileSvc(ctx context.Context, idPa
 			for _, arrayDeleteList := range arrayDeleteComorbidity {
 				_, errResp := u.repoDB.DeletePatientComorbidity(ctx, arrayDeleteList, idPatientFileConvert)
 				if errResp != nil {
-
+					continue
 				}
 			}
 		}
@@ -174,6 +188,20 @@ func (u UpdatePatientFileService) UpdatePatientFileSvc(ctx context.Context, idPa
 				num = respSelectSymptom[i]
 				arrayDeleteSymptom = append(arrayDeleteSymptom, num)
 			}
+		} else if len(arrayTransformReqIntSymptom) == len(respSelectSymptom) {
+			for _, arrayCreateList := range arrayTransformReqIntSymptom {
+				_, errResp := u.repoDB.CreatePatientSymptom(ctx, arrayCreateList, idPatientFileConvert)
+				if errResp != nil {
+
+					continue
+				}
+			}
+			for _, arrayDeleteList := range respSelectSymptom {
+				_, errResp := u.repoDB.DeletePatientSymptom(ctx, arrayDeleteList, idPatientFileConvert)
+				if errResp != nil {
+					continue
+				}
+			}
 		}
 
 		if len(arrayCreateSymptom) > 0 {
@@ -190,7 +218,7 @@ func (u UpdatePatientFileService) UpdatePatientFileSvc(ctx context.Context, idPa
 			for _, arrayDeleteList := range arrayDeleteSymptom {
 				_, errResp := u.repoDB.DeletePatientSymptom(ctx, arrayDeleteList, idPatientFileConvert)
 				if errResp != nil {
-
+					continue
 				}
 			}
 		}
