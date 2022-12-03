@@ -20,6 +20,13 @@ paths:
   deleteComorbidity: "/v1/sgp-logic-svc/deleteComorbidity"
   deleteSymptom: "/v1/sgp-logic-svc/deleteSymptom"
 
+  updatePatientFile: "/v1/sgp-logic-svc/updateInfoPatientFile"
+
 appProperties:
   createComorbidityStatusInitial: 1
   deleteComorbidityStatusInactive: 2
+
+app-PropertiesUpdateBot:
+  date: "2006-01-02"
+  false: false
+  true: true
