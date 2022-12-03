@@ -16,17 +16,32 @@ type Repository interface {
 }
 
 type Service interface {
-	UpdatePatientFileSvc(ctx context.Context, idPatient string, idPatientFile string, statePatient string, highDate string, lowDate string, comorbidity []string, symptom []string) (UpdatePatientFileResponse, error)
+	UpdatePatientFileSvc(ctx context.Context, idPatient string, idPatientFile string, statePatient StatePatient, highDate string, lowDate string, comorbidity Comorbidity, symptom Symptom) (UpdatePatientFileResponse, error)
 }
 
 type UpdatePatientFileRequest struct {
-	IdPatient     int      `json:"idPatient"`
-	IdPatientFile int      `json:"idPatientFile"`
-	StatePatient  string   `json:"statePatient"`
-	HighDate      string   `json:"highDate"`
-	LowDate       string   `json:"lowDate"`
-	Comorbidity   []string `json:"comorbidity"`
-	Symptom       []string `json:"symptom"`
+	IdPatient     int          `json:"idPatient"`
+	IdPatientFile int          `json:"idPatientFile"`
+	StatePatient  StatePatient `json:"statePatient"`
+	HighDate      string       `json:"highDate"`
+	LowDate       string       `json:"lowDate"`
+	Comorbidity   Comorbidity  `json:"comorbidity"`
+	Symptom       Symptom      `json:"symptom"`
+}
+
+type Comorbidity []struct {
+	Value string `json:"value"`
+	Label string `json:"label"`
+}
+
+type Symptom []struct {
+	Value string `json:"value"`
+	Label string `json:"label"`
+}
+
+type StatePatient struct {
+	Value string `json:"value"`
+	Label string `json:"label"`
 }
 
 type SelectPatientFileCbxResponse struct {

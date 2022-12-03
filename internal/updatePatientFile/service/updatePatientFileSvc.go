@@ -18,13 +18,13 @@ func NewUpdatePatientFileService(repoDB updatePatientFile.Repository, logger kit
 	return &UpdatePatientFileService{repoDB: repoDB, logger: logger}
 }
 
-func (u UpdatePatientFileService) UpdatePatientFileSvc(ctx context.Context, idPatient string, idPatientFile string, statePatient string, highDate string, lowDate string, comorbidity []string, symptom []string) (updatePatientFile.UpdatePatientFileResponse, error) {
+func (u UpdatePatientFileService) UpdatePatientFileSvc(ctx context.Context, idPatient string, idPatientFile string, statePatient updatePatientFile.StatePatient, highDate string, lowDate string, comorbidity updatePatientFile.Comorbidity, symptom updatePatientFile.Symptom) (updatePatientFile.UpdatePatientFileResponse, error) {
 	u.logger.Log("Starting Update Info Patient", constants.UUID, ctx.Value(constants.UUID))
 
 	var statePatientID int
 	idPatientConvert, _ := strconv.Atoi(idPatient)
 	idPatientFileConvert, _ := strconv.Atoi(idPatientFile)
-	statePatientID, _ = strconv.Atoi(statePatient)
+	statePatientID, _ = strconv.Atoi(statePatient.Value)
 
 	respSelectCbx, errSelect := u.repoDB.SelectPatientFileCBXRepo(ctx, idPatientConvert, idPatientFileConvert)
 	if errSelect != nil {
@@ -34,7 +34,7 @@ func (u UpdatePatientFileService) UpdatePatientFileSvc(ctx context.Context, idPa
 			Message:      "failed",
 		}, constants.ErrorDataError
 	}
-	if statePatient == "" {
+	if statePatient.Value == "" {
 		statePatientID = respSelectCbx.StatePatient
 	}
 	if highDate == "" {
@@ -67,7 +67,7 @@ func (u UpdatePatientFileService) UpdatePatientFileSvc(ctx context.Context, idPa
 	// INICIO TRANSFORMACION ARREGLO DE STRING A INT (COMORBIDITY)
 	var arrayTransformReqIntComorbidity []int
 	for _, arrayRequest := range comorbidity {
-		dataInt, err := strconv.Atoi(arrayRequest)
+		dataInt, err := strconv.Atoi(arrayRequest.Value)
 		if err != nil {
 			panic(err)
 		}
@@ -139,7 +139,7 @@ func (u UpdatePatientFileService) UpdatePatientFileSvc(ctx context.Context, idPa
 	// INICIO TRANSFORMACION ARREGLO DE STRING A INT (SYMPTOM)
 	var arrayTransformReqIntSymptom []int
 	for _, arrayRequest := range symptom {
-		dataInt, err := strconv.Atoi(arrayRequest)
+		dataInt, err := strconv.Atoi(arrayRequest.Value)
 		if err != nil {
 			panic(err)
 		}
